@@ -1,0 +1,36 @@
+html,
+body {
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-UltraLight';
+  src: url(./fonts/HelveticaNeue-UltraLight.otf) format('otf');
+}
+
+.newTab {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: -10;
+  transition: all 500ms ease;
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+}
+
+.newTab span {
+  display: inherit;
+  justify-self: center;
+  font-size: 8em;
+  font-family: 'HelveticaNeue-UltraLight';
+  color: whitesmoke;
+}
+
+.newTab p {
+  display: inherit;
+  justify-self: center;
+  font-size: 2em;
+  font-family: 'HelveticaNeue-UltraLight';
+  color: whitesmoke;
+}

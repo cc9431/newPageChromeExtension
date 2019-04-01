@@ -1,0 +1,13 @@
+{
+  "short_name": "Tabber",
+  "name": "Tabber",
+  "author": "Charles Calder",
+  "manifest_version": 2,
+  "version": "0.1",
+  "permissions": ["activeTab"],
+  "chrome_url_overrides": {
+    "newtab": "index.html",
+    "default_title": "This is a title"
+  },
+  "display": "standalone"
+}
