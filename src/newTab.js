@@ -16,16 +16,24 @@ class Tab extends Component {
   randomChoice(...items) {
     return items[Math.floor(Math.random() * items.length)];
   }
-  generateColor() {
+  generateRandomHslColor() {
+    const hue = Math.random() * 360;
+    const analog = hue + 60;
+    const hue_string = `hsl(${hue}, 40%, 50%)`;
+    const analog_string = `hsl(${analog}, 40%, 50%)`;
+    return `${hue_string}, ${analog_string}`;
+  }
+  generateRandomHexColor() {
     return `#${Math.random()
       .toString(16)
       .substr(-6)}`;
   }
   generateColors() {
     const colors = [];
-    for (var i = 0; i < this.state.numColors; i++) {
-      colors.push(this.generateColor());
-    }
+    // for (var i = 0; i < this.state.numColors; i++) {
+    //   colors.push(this.generateRandomHslColor());
+    // }
+    colors.push(this.generateRandomHslColor());
     this.setState({ colors: colors });
   }
   generateDirection() {

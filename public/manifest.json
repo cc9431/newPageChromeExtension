@@ -6,8 +6,6 @@
   "version": "0.1",
   "permissions": ["activeTab"],
   "chrome_url_overrides": {
-    "newtab": "index.html",
-    "default_title": "This is a title"
-  },
-  "display": "standalone"
+    "newtab": "index.html"
+  }
 }
