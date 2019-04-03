@@ -8,7 +8,7 @@ class Tab extends Component {
     this.state = {
       time: '',
       date: '',
-      numColors: 2,
+      numAnalogColors: 1,
       colors: [],
       right_left: ''
     };
@@ -22,7 +22,7 @@ class Tab extends Component {
     const analogVal = 90;
 
     colors.push(`hsl(${hue}, 40%, 50%)`);
-    for (var i = 0; i < this.state.numColors; i++) {
+    for (var i = 0; i < this.state.numAnalogColors; i++) {
       const analogHue = hue + (i + 1) * analogVal;
       colors.push(`hsl(${analogHue}, 40%, 50%)`);
     }
@@ -61,9 +61,9 @@ class Tab extends Component {
 
   render() {
     const style = {
-      backgroundImage: `linear-gradient(to ${
-        this.state.right_left
-      } bottom, ${this.state.colors.join(', ')})`
+      backgroundImage: `linear-gradient(to
+        ${this.state.right_left} bottom,
+        ${this.state.colors.join(', ')})`
     };
     return (
       <div style={style} className="newTab">
