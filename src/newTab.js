@@ -16,42 +16,43 @@ class Tab extends Component {
   randomChoice(...items) {
     return items[Math.floor(Math.random() * items.length)];
   }
-  generateRandomHslColor() {
-    const hue = Math.random() * 360;
-    const analog = hue + 60;
-    const hue_string = `hsl(${hue}, 40%, 50%)`;
-    const analog_string = `hsl(${analog}, 40%, 50%)`;
-    return `${hue_string}, ${analog_string}`;
-  }
-  generateRandomHexColor() {
-    return `#${Math.random()
-      .toString(16)
-      .substr(-6)}`;
-  }
-  generateColors() {
+  generateRandomHslColors() {
     const colors = [];
-    // for (var i = 0; i < this.state.numColors; i++) {
-    //   colors.push(this.generateRandomHslColor());
-    // }
-    colors.push(this.generateRandomHslColor());
-    this.setState({ colors: colors });
+    const hue = Math.random() * 360;
+    const analogVal = 90;
+
+    colors.push(`hsl(${hue}, 40%, 50%)`);
+    for (var i = 0; i < this.state.numColors; i++) {
+      const analogHue = hue + (i + 1) * analogVal;
+      colors.push(`hsl(${analogHue}, 40%, 50%)`);
+    }
+    return colors;
   }
+
   generateDirection() {
     this.setState({
       right_left: this.randomChoice('right', 'left')
     });
   }
+
+  generateGradient() {
+    this.setState({ colors: this.generateRandomHslColors() });
+    this.generateDirection();
+  }
+
   setDateTime() {
     this.setState({
       time: moment().format('hh mm ss'),
       date: moment().format('LL')
     });
   }
+
   componentWillMount() {
-    this.generateColors();
+    this.generateGradient();
     this.generateDirection();
     this.setDateTime();
   }
+
   componentDidMount() {
     setInterval(() => {
       this.setDateTime();
