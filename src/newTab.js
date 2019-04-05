@@ -1,16 +1,16 @@
-import moment from 'moment';
-import React, { Component } from 'react';
-import './newTab.css';
+import moment from "moment";
+import React, { Component } from "react";
+import "./newTab.css";
 
 class Tab extends Component {
   constructor() {
     super();
     this.state = {
-      time: '',
-      date: '',
+      time: "",
+      date: "",
       numAnalogColors: 1,
       colors: [],
-      right_left: ''
+      right_left: ""
     };
   }
   randomChoice(...items) {
@@ -31,7 +31,8 @@ class Tab extends Component {
 
   generateDirection() {
     this.setState({
-      right_left: this.randomChoice('right', 'left')
+      right_left: this.randomChoice("right", "left"),
+      top_bottom: this.randomChoice("top", "bottom")
     });
   }
 
@@ -42,8 +43,8 @@ class Tab extends Component {
 
   setDateTime() {
     this.setState({
-      time: moment().format('hh mm ss'),
-      date: moment().format('LL')
+      time: moment().format("hh mm ss"),
+      date: moment().format("LL")
     });
   }
 
@@ -62,8 +63,9 @@ class Tab extends Component {
   render() {
     const style = {
       backgroundImage: `linear-gradient(to
-        ${this.state.right_left} bottom,
-        ${this.state.colors.join(', ')})`
+        ${this.state.right_left}
+        ${this.state.top_bottom},
+        ${this.state.colors.join(", ")})`
     };
     return (
       <div style={style} className="newTab">

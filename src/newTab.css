@@ -4,8 +4,8 @@ body {
 }
 
 @font-face {
-  font-family: 'HelveticaNeue-UltraLight';
-  src: url(./fonts/HelveticaNeue-UltraLight.otf) format('otf');
+  font-family: "HelveticaNeue-UltraLight";
+  src: url(./fonts/HelveticaNeue-UltraLight.otf) format("otf");
 }
 
 .newTab {
@@ -23,7 +23,7 @@ body {
   display: inherit;
   justify-self: center;
   font-size: 8em;
-  font-family: 'HelveticaNeue-UltraLight';
+  font-family: "HelveticaNeue-UltraLight";
   color: whitesmoke;
 }
 
@@ -31,6 +31,6 @@ body {
   display: inherit;
   justify-self: center;
   font-size: 2em;
-  font-family: 'HelveticaNeue-UltraLight';
+  font-family: "HelveticaNeue-UltraLight";
   color: whitesmoke;
 }
