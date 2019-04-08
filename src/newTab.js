@@ -8,28 +8,24 @@ class Tab extends Component {
     this.state = {
       time: "",
       date: "",
-      numAnalogColors: 1,
-      colors: [],
+      gradientColors: "",
+      top_bottom: "",
       right_left: ""
     };
   }
+
   randomChoice(...items) {
     return items[Math.floor(Math.random() * items.length)];
   }
-  generateRandomHslColors() {
-    const colors = [];
-    const hue = Math.random() * 360;
-    const analogVal = 90;
 
-    colors.push(`hsl(${hue}, 40%, 50%)`);
-    for (var i = 0; i < this.state.numAnalogColors; i++) {
-      const analogHue = hue + (i + 1) * analogVal;
-      colors.push(`hsl(${analogHue}, 40%, 50%)`);
-    }
-    return colors;
+  generateGradientColorsHSL() {
+    const hue = Math.random() * 360;
+    const gradientColors = `hsl(${hue}, 40%, 50%), hsl(${hue + 90}, 40%, 50%)`;
+    console.log(gradientColors);
+    this.setState({ gradientColors });
   }
 
-  generateDirection() {
+  generateGradientDirection() {
     this.setState({
       right_left: this.randomChoice("right", "left"),
       top_bottom: this.randomChoice("top", "bottom")
@@ -37,8 +33,8 @@ class Tab extends Component {
   }
 
   generateGradient() {
-    this.setState({ colors: this.generateRandomHslColors() });
-    this.generateDirection();
+    this.generateGradientColorsHSL();
+    this.generateGradientDirection();
   }
 
   setDateTime() {
@@ -50,7 +46,6 @@ class Tab extends Component {
 
   componentWillMount() {
     this.generateGradient();
-    this.generateDirection();
     this.setDateTime();
   }
 
@@ -65,7 +60,7 @@ class Tab extends Component {
       backgroundImage: `linear-gradient(to
         ${this.state.right_left}
         ${this.state.top_bottom},
-        ${this.state.colors.join(", ")})`
+        ${this.state.gradientColors})`
     };
     return (
       <div style={style} className="newTab">
