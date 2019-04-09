@@ -56,12 +56,19 @@ class Tab extends Component {
   }
 
   render() {
-    const style = {
-      backgroundImage: `linear-gradient(to
-        ${this.state.right_left}
-        ${this.state.top_bottom},
-        ${this.state.gradientColors})`
-    };
+    let style;
+    if (this.props.color) {
+      style = {
+        backgroundColor: this.props.color
+      };
+    } else {
+      style = {
+        backgroundImage: `linear-gradient(to
+          ${this.state.right_left}
+          ${this.state.top_bottom},
+          ${this.state.gradientColors})`
+      };
+    }
     return (
       <div style={style} className="newTab">
         <div />

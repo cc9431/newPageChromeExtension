@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Tab from "./newTab";
+import Wrapper from "./Wrapper";
 
-ReactDOM.render(<Tab />, document.getElementById("root"));
+ReactDOM.render(<Wrapper />, document.getElementById("root"));
