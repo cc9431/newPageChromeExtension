@@ -22,7 +22,9 @@ class Wrapper extends Component {
     const c = this.state.color ? this.state.color : "";
     return (
       <div>
-        <BlockPicker color={c} onChangeComplete={this.handleColorChange} />
+        <div style={{ position: "absolute" }}>
+          <BlockPicker color={c} onChangeComplete={this.handleColorChange} />
+        </div>
         <Tab color={c} />
       </div>
     );
