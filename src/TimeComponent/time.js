@@ -1,16 +1,16 @@
-import moment from "moment";
-import React, { Component } from "react";
-import "./newTab.css";
+import moment from 'moment';
+import React, { Component } from 'react';
+import './time.css';
 
-class Tab extends Component {
+class Time extends Component {
   constructor() {
     super();
     this.state = {
-      time: "",
-      date: "",
-      gradientColors: "",
-      top_bottom: "",
-      right_left: ""
+      time: '',
+      date: '',
+      gradientColors: '',
+      top_bottom: '',
+      right_left: ''
     };
   }
 
@@ -21,14 +21,13 @@ class Tab extends Component {
   generateGradientColorsHSL() {
     const hue = Math.random() * 360;
     const gradientColors = `hsl(${hue}, 40%, 50%), hsl(${hue + 90}, 40%, 50%)`;
-    console.log(gradientColors);
     this.setState({ gradientColors });
   }
 
   generateGradientDirection() {
     this.setState({
-      right_left: this.randomChoice("right", "left"),
-      top_bottom: this.randomChoice("top", "bottom")
+      right_left: this.randomChoice('right', 'left'),
+      top_bottom: this.randomChoice('top', 'bottom')
     });
   }
 
@@ -39,27 +38,35 @@ class Tab extends Component {
 
   setDateTime() {
     this.setState({
-      time: moment().format("hh mm ss"),
-      date: moment().format("LL")
+      time: moment().format('hh mm ss'),
+      date: moment().format('LL')
     });
   }
 
   componentWillMount() {
     this.generateGradient();
     this.setDateTime();
+    document.title = moment().format('MMM, DD');
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.setDateTime();
-    }, 1000);
+    setTimeout(
+      () =>
+        setInterval(() => {
+          this.setDateTime();
+        }, 1000),
+      1000 - moment().milliseconds()
+    );
   }
 
   render() {
     let style;
-    if (this.props.color) {
+    if (this.props.color1 && this.props.color2) {
       style = {
-        backgroundColor: this.props.color
+        backgroundImage: `linear-gradient(to
+          ${this.state.right_left}
+          ${this.state.top_bottom},
+          ${this.props.color1}, ${this.props.color2})`
       };
     } else {
       style = {
@@ -70,7 +77,7 @@ class Tab extends Component {
       };
     }
     return (
-      <div style={style} className="newTab">
+      <div style={style} className="time">
         <div />
         <div>
           <div>
@@ -86,4 +93,4 @@ class Tab extends Component {
   }
 }
 
-export default Tab;
+export default Time;

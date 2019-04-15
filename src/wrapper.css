@@ -1,0 +1,5 @@
+.color {
+  position: absolute;
+  margin: 1em;
+  transition: all 500ms ease;
+}

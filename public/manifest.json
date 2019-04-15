@@ -1,6 +1,6 @@
 {
-  "short_name": "Tabber",
-  "name": "Tabber",
+  "short_name": "tab",
+  "name": "tab",
   "author": "Charles Calder",
   "manifest_version": 2,
   "version": "0.1",
