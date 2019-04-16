@@ -11,7 +11,7 @@ class Wrapper extends Component {
       color1: '',
       color2: '',
       pickColorOne: true,
-      showColorPicker: false
+      colorClasses: ['color']
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -25,16 +25,18 @@ class Wrapper extends Component {
   }
 
   handleKeyPress(key) {
-    console.log(key);
-    if (key.code === 'KeyC' && key.ctrlKey)
-      this.setState({ showColorPicker: !this.state.showColorPicker });
+    if (key.code === 'KeyC' && key.ctrlKey) {
+      const colLength = this.state.colorClasses.length;
+      if (colLength === 1) this.setState({ colorClasses: ['color', 'show'] });
+      else this.setState({ colorClasses: ['color'] });
+    }
   }
 
   componentDidMount() {
     document.addEventListener('keypress', this.handleKeyPress);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     document.removeEventListener('keypress', this.handleKeyPress);
   }
 
@@ -43,16 +45,13 @@ class Wrapper extends Component {
     const c2 = this.state.color2 ? this.state.color2 : '';
     return (
       <div>
-        {this.state.showColorPicker && (
-          <div className="color">
-            {/* <BlockPicker color={c} onChangeComplete={this.handleColorChange} /> */}
-            <CirclePicker onChangeComplete={this.handleColorChange} />
-          </div>
-        )}
+        <div className={this.state.colorClasses.join(' ')}>
+          {/* <BlockPicker color={c} onChangeComplete={this.handleColorChange} /> */}
+          <CirclePicker onChangeComplete={this.handleColorChange} />
+        </div>
         <Time color1={c1} color2={c2} />
       </div>
     );
-    // return <Tab />;
   }
 }
 

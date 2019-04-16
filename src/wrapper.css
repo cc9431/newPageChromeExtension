@@ -1,5 +1,16 @@
 .color {
   position: absolute;
+  margin: -5em 1em 2em 1em;
+  opacity: 0;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  visibility: hidden;
+}
+
+.color.show {
+  opacity: 1;
+  visibility: visible;
   margin: 1em;
-  transition: all 500ms ease;
 }
