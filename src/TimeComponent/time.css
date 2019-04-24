@@ -1,25 +1,11 @@
-html,
-body {
-  overflow: hidden;
-}
-
 @font-face {
   font-family: 'HelveticaNeue-UltraLight';
   src: url(../fonts/HelveticaNeue-UltraLight.otf) format('otf');
 }
 
 .time {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  z-index: -10;
-  transition: all 500ms ease;
   display: grid;
-  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-rows: 2fr 3fr;
 }
 
 .time span {

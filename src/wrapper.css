@@ -1,11 +1,11 @@
 .color {
   position: absolute;
-  margin: -5em 1em 2em 1em;
+  margin: -7em 1em 2em 1em;
   opacity: 0;
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
   visibility: hidden;
 }
 

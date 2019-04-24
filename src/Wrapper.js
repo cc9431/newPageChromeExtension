@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import { CirclePicker } from 'react-color';
 import Time from './TimeComponent/time';
+import Background from './BackgroundComponent/background';
 import './wrapper.css';
 
 class Wrapper extends Component {
   constructor() {
     super();
     this.state = {
-      // color: localStorage.getItem("colorKey") || ""
-      color1: '',
-      color2: '',
-      pickColorOne: true,
+      color: '',
+      solid: false,
       colorClasses: ['color']
     };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
   }
 
   handleColorChange(color) {
-    if (this.state.pickColorOne) this.setState({ color1: color.hex });
-    else this.setState({ color2: color.hex });
-    this.setState({ pickColorOne: !this.state.pickColorOne });
-    // localStorage.setItem("color", color);
+    this.setState({
+      solid: color.hex === this.state.color && !this.state.solid
+    });
+    this.setState({ color: color.hex });
   }
 
   handleKeyPress(key) {
@@ -33,24 +30,21 @@ class Wrapper extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keypress', this.handleKeyPress);
+    document.addEventListener('keypress', (k) => this.handleKeyPress(k));
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keypress', this.handleKeyPress);
+    document.removeEventListener('keypress', (k) => this.handleKeyPress(k));
   }
 
   render() {
-    const c1 = this.state.color1 ? this.state.color1 : '';
-    const c2 = this.state.color2 ? this.state.color2 : '';
     return (
-      <div>
+      <Background color={this.state.color} solid={this.state.solid}>
         <div className={this.state.colorClasses.join(' ')}>
-          {/* <BlockPicker color={c} onChangeComplete={this.handleColorChange} /> */}
-          <CirclePicker onChangeComplete={this.handleColorChange} />
+          <CirclePicker onChangeComplete={(c) => this.handleColorChange(c)} />
         </div>
-        <Time color1={c1} color2={c2} />
-      </div>
+        <Time />
+      </Background>
     );
   }
 }
