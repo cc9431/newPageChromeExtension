@@ -11,7 +11,7 @@
 .time span {
   display: inherit;
   justify-self: center;
-  font-size: 8em;
+  font-size: 95px;
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
 }
@@ -19,7 +19,7 @@
 .time p {
   display: inherit;
   justify-self: center;
-  font-size: 2em;
+  font-size: 25px;
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
 }

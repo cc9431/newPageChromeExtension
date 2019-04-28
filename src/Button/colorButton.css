@@ -1,0 +1,27 @@
+.colorButton {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  top: 30px;
+  left: 30px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff55;
+  transition: all 250ms ease;
+  vertical-align: middle;
+  border: none;
+  outline: none;
+}
+
+.colorButton:hover {
+  background-color: #ffffffbb;
+  box-shadow: 0px 8px 8px #55555555;
+}
+
+.colorButton:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 8px #55555555;
+}

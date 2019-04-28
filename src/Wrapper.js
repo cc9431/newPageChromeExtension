@@ -1,32 +1,35 @@
 import React, { Component } from 'react';
 import { CirclePicker } from 'react-color';
-import Time from './TimeComponent/time';
-import Background from './BackgroundComponent/background';
+import Time from './Time/time';
+import Background from './Background/background';
 import './wrapper.css';
+import { ColorButton } from './Button/colorButton';
 
 class Wrapper extends Component {
   constructor() {
     super();
     this.state = {
-      color: '',
+      hsl: { h: 0, s: 0, l: 0 },
       solid: false,
       colorClasses: ['color']
     };
   }
 
+  showHideColor() {
+    const colLength = this.state.colorClasses.length;
+    if (colLength === 1) this.setState({ colorClasses: ['color', 'show'] });
+    else this.setState({ colorClasses: ['color'] });
+  }
+
   handleColorChange(color) {
     this.setState({
-      solid: color.hex === this.state.color && !this.state.solid
+      solid: color.hsl.h === this.state.hsl.h && !this.state.solid
     });
-    this.setState({ color: color.hex });
+    this.setState({ hsl: color.hsl });
   }
 
   handleKeyPress(key) {
-    if (key.code === 'KeyC' && key.ctrlKey) {
-      const colLength = this.state.colorClasses.length;
-      if (colLength === 1) this.setState({ colorClasses: ['color', 'show'] });
-      else this.setState({ colorClasses: ['color'] });
-    }
+    if (key.code === 'KeyC' && key.ctrlKey) this.showHideColor();
   }
 
   componentDidMount() {
@@ -39,10 +42,11 @@ class Wrapper extends Component {
 
   render() {
     return (
-      <Background color={this.state.color} solid={this.state.solid}>
+      <Background hsl={this.state.hsl} solid={this.state.solid}>
         <div className={this.state.colorClasses.join(' ')}>
           <CirclePicker onChangeComplete={(c) => this.handleColorChange(c)} />
         </div>
+        <ColorButton onClick={() => this.showHideColor()} />
         <Time />
       </Background>
     );
