@@ -3,6 +3,7 @@ import { CirclePicker } from 'react-color';
 import Time from './Time/time';
 import Background from './Background/background';
 import './wrapper.css';
+import CircleColorPicker from './customColorPicker/customColorPicker';
 import { ColorButton } from './Button/colorButton';
 
 class Wrapper extends Component {
@@ -10,7 +11,7 @@ class Wrapper extends Component {
     super();
     this.state = {
       hsl: { h: 0, s: 0, l: 0 },
-      solid: false,
+      solid: true,
       colorClasses: ['color']
     };
   }
@@ -23,7 +24,7 @@ class Wrapper extends Component {
 
   handleColorChange(color) {
     this.setState({
-      solid: color.hsl.h === this.state.hsl.h && !this.state.solid
+      solid: color.hsl.h !== this.state.hsl.h || !this.state.solid
     });
     this.setState({ hsl: color.hsl });
   }
@@ -48,6 +49,7 @@ class Wrapper extends Component {
         </div>
         <ColorButton onClick={() => this.showHideColor()} />
         <Time />
+        <CircleColorPicker />
       </Background>
     );
   }

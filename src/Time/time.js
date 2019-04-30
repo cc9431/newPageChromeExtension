@@ -36,14 +36,11 @@ class Time extends Component {
   render() {
     return (
       <div className="time">
-        <div />
         <div>
-          <div>
-            <span>{this.state.time}</span>
-          </div>
-          <div>
-            <p>{this.state.date}</p>
-          </div>
+          <span>{this.state.time}</span>
+        </div>
+        <div>
+          <p>{this.state.date}</p>
         </div>
       </div>
     );
