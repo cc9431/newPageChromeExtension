@@ -18,20 +18,20 @@ class Time extends Component {
     });
   }
 
-  componentWillMount() {
+  startClock() {
     this.setDateTime();
-    document.title = moment().format('MMM, DD');
+    setInterval(() => {
+      this.setDateTime();
+    }, 1000);
   }
 
-  componentDidMount() {
-    setTimeout(
-      () =>
-        setInterval(() => {
-          this.setDateTime();
-        }, 1000),
-      1000 - moment().milliseconds()
-    );
+  componentWillMount() {
+    document.title = moment().format('MMM, DD');
+    this.setDateTime();
+    setTimeout(() => this.startClock(), 1000 - moment().milliseconds());
   }
+
+  componentDidMount() {}
 
   render() {
     return (

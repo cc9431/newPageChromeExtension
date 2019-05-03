@@ -5,7 +5,6 @@ class Background extends PureComponent {
   constructor() {
     super();
     this.state = {
-      hsl: { h: 0, s: 0, l: 0 },
       gradient: '',
       top_bottom: '',
       right_left: ''
