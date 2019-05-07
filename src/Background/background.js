@@ -6,6 +6,7 @@ class Background extends PureComponent {
     super();
     this.state = {
       gradient: '',
+      color: localStorage.getItem('color', '#000000'),
       top_bottom: '',
       right_left: ''
     };
@@ -15,11 +16,9 @@ class Background extends PureComponent {
     return items[Math.floor(Math.random() * items.length)];
   }
 
-  generateGradientColorsHSL(hsl, solid = false) {
+  generateGradientColorsHSL(hsl) {
     const { h, s, l } = hsl;
-    const offset = solid ? 0 : 90;
-    const gradient = `hsl(${h}, ${s}%, ${l}%), hsl(${h +
-      offset}, ${s}%, ${l}%)`;
+    const gradient = `hsl(${h}, ${s}%, ${l}%), hsl(${h + 90}, ${s}%, ${l}%)`;
     this.setState({ gradient: gradient });
   }
 
@@ -50,16 +49,21 @@ class Background extends PureComponent {
       hsl.s *= 100;
       hsl.l *= 100;
       this.generateGradientColorsHSL(hsl, solid);
+      this.setState({ color: nextProps.color });
+      localStorage.setItem('color', nextProps.color);
     }
   }
 
   render() {
     const style = {
-      backgroundImage: `linear-gradient(to
-          ${this.state.right_left}
-          ${this.state.top_bottom},
-          ${this.state.gradient})`
+      backgroundColor: this.state.color
     };
+    // const backgroundImage = {
+    //   backgroundImage: `linear-gradient(to
+    //     ${this.state.right_left}
+    //     ${this.state.top_bottom},
+    //     ${this.state.gradient})`
+    // };
     return (
       <div style={style} className="background">
         {this.props.children}

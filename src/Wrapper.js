@@ -4,13 +4,13 @@ import Time from './Time/time';
 import Background from './Background/background';
 import './wrapper.css';
 import CircleColorPicker from './customColorPicker/customColorPicker';
-import { ColorButton } from './Button/colorButton';
 
 class Wrapper extends Component {
   constructor() {
     super();
     this.state = {
       hsl: { h: 0, s: 0, l: 0 },
+      color: '',
       solid: true,
       colorClasses: ['color']
     };
@@ -26,28 +26,19 @@ class Wrapper extends Component {
     this.setState({
       solid: color.hsl.h !== this.state.hsl.h || !this.state.solid
     });
-    this.setState({ hsl: color.hsl });
-  }
-
-  handleKeyPress(key) {
-    if (key.code === 'KeyC' && key.ctrlKey) this.showHideColor();
-  }
-
-  componentDidMount() {
-    document.addEventListener('keypress', (k) => this.handleKeyPress(k));
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keypress', (k) => this.handleKeyPress(k));
+    this.setState({ hsl: color.hsl, color: color.hex });
   }
 
   render() {
     return (
-      <Background hsl={this.state.hsl} solid={this.state.solid}>
+      <Background
+        hsl={this.state.hsl}
+        color={this.state.color}
+        solid={this.state.solid}
+      >
         <div className={this.state.colorClasses.join(' ')}>
           <CirclePicker onChangeComplete={(c) => this.handleColorChange(c)} />
         </div>
-        <ColorButton onClick={() => this.showHideColor()} />
         <Time />
         <CircleColorPicker />
       </Background>
