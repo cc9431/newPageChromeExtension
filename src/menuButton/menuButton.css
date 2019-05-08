@@ -1,0 +1,13 @@
+.menuButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100px;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+}
+
+.hover {
+  opacity: 0;
+}

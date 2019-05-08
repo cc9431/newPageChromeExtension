@@ -6,7 +6,7 @@ class Background extends PureComponent {
     super();
     this.state = {
       gradient: '',
-      color: localStorage.getItem('color', '#000000'),
+      color: localStorage.getItem('color') || '#555555',
       top_bottom: '',
       right_left: ''
     };
