@@ -1,14 +1,16 @@
 import React from 'react';
-import { CustomPicker } from 'react-color';
-var { Saturation } = require('react-color/lib/components/common');
+import { CirclePicker } from 'react-color';
+import './customColorPicker.css';
 
-class CircleColorPicker extends React.Component {
-  handleChange() {
-    return;
-  }
+class CustomColorPicker extends React.Component {
   render() {
-    return <div>{/* <span>this is a color picker</span> */}</div>;
+    return (
+      <CirclePicker
+        className={this.props.show ? 'color colorHover' : 'color'}
+        onChangeComplete={(e) => this.props.handleColorChange(e)}
+      />
+    );
   }
 }
 
-export default CustomPicker(CircleColorPicker);
+export default CustomColorPicker;

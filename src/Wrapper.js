@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { CirclePicker } from 'react-color';
-import MenuButton from './menuButton/menuButton';
+// import { CirclePicker } from 'react-color';
+import MenuButton from './MenuButton/menuButton';
 import Time from './Time/time';
 import Background from './Background/background';
-// import CircleColorPicker from './customColorPicker/customColorPicker';
+import CustomColorPicker from './CustomColorPicker/customColorPicker';
 import './wrapper.css';
 
 class Wrapper extends Component {
@@ -13,16 +13,19 @@ class Wrapper extends Component {
       hsl: { h: 0, s: 0, l: 0 },
       color: '',
       solid: true,
-      colorHover: false
+      colorHover: false,
+      colorShow: false
     };
   }
 
   handleColorHoverEnter() {
-    this.setState({ colorHover: true });
+    this.setState({ colorShow: true });
+    // this.setState({ colorHover: true });
+    // setTimeout(() => this.setState({ colorShow: this.state.colorHover }), 500);
   }
 
   handleColorHoverExit() {
-    this.setState({ colorHover: false });
+    this.setState({ colorHover: false, colorShow: false });
   }
 
   handleColorChange(color) {
@@ -42,13 +45,14 @@ class Wrapper extends Component {
         <div
           onMouseEnter={() => this.handleColorHoverEnter()}
           onMouseLeave={() => this.handleColorHoverExit()}
-          className="color"
         >
-          <CirclePicker onChangeComplete={(c) => this.handleColorChange(c)} />
+          <CustomColorPicker
+            show={this.state.colorShow}
+            handleColorChange={(e) => this.handleColorChange(e)}
+          />
         </div>
-        <MenuButton show={!this.state.colorHover} />
+        <MenuButton show={!this.state.colorShow} />
         <Time />
-        {/* <CircleColorPicker /> */}
       </Background>
     );
   }
