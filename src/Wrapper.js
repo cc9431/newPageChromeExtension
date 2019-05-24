@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 // import { CirclePicker } from 'react-color';
-import MenuButton from './MenuButton/menuButton';
-import Time from './Time/time';
-import Background from './Background/background';
-import CustomColorPicker from './CustomColorPicker/customColorPicker';
+import MenuButton from './Components/MenuButton/menuButton';
+import Time from './Components/Time/time';
+import Background from './Components/Background/background';
+import CustomColorPicker from './Components/CustomColorPicker/customColorPicker';
+import Circle from './Components/CustomColorPicker/circle';
 import './wrapper.css';
 
 class Wrapper extends Component {
@@ -50,6 +51,16 @@ class Wrapper extends Component {
             show={this.state.colorShow}
             handleColorChange={(e) => this.handleColorChange(e)}
           />
+          {[0, 0, 0, 0, 0].map((hex) => (
+            <Circle
+              hex={
+                '#' +
+                Math.random()
+                  .toString(16)
+                  .slice(-6)
+              }
+            />
+          ))}
         </div>
         <MenuButton show={!this.state.colorShow} />
         <Time />
