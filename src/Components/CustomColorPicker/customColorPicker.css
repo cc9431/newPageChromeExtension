@@ -2,9 +2,16 @@
   height: 28px;
   width: 28px;
   border-radius: 50%;
+  margin: 5px;
+  outline: none;
+  transition: all 300ms ease;
 }
 
-.color {
+.circle:hover {
+  transform: scale(1.2);
+}
+
+.swatch {
   position: absolute;
   padding: 0px 30px 30px 30px;
   opacity: 0;
@@ -12,7 +19,7 @@
   z-index: 1;
 }
 
-.colorHover {
+.swatchHover {
   opacity: 1;
   padding: 30px;
 }

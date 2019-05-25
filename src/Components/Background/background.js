@@ -44,28 +44,15 @@ class Background extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.hsl !== this.props.hsl) {
-      const { hsl, solid } = nextProps;
-      hsl.s *= 100;
-      hsl.l *= 100;
-      this.generateGradientColorsHSL(hsl, solid);
+    if (nextProps.color !== this.props.color) {
       this.setState({ color: nextProps.color });
       localStorage.setItem('color', nextProps.color);
     }
   }
 
   render() {
-    const style = {
-      backgroundColor: this.state.color
-    };
-    // const backgroundImage = {
-    //   backgroundImage: `linear-gradient(to
-    //     ${this.state.right_left}
-    //     ${this.state.top_bottom},
-    //     ${this.state.gradient})`
-    // };
     return (
-      <div style={style} className="background">
+      <div style={{ backgroundColor: this.state.color }} className="background">
         {this.props.children}
       </div>
     );

@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-// import { CirclePicker } from 'react-color';
 import MenuButton from './Components/MenuButton/menuButton';
 import Time from './Components/Time/time';
 import Background from './Components/Background/background';
-import CustomColorPicker from './Components/CustomColorPicker/customColorPicker';
-import Circle from './Components/CustomColorPicker/circle';
+import CustomColorPicker from './Components/CustomColorPicker/customColorPicker_real';
 import './wrapper.css';
 
 class Wrapper extends Component {
   constructor() {
     super();
     this.state = {
-      hsl: { h: 0, s: 0, l: 0 },
       color: '',
-      solid: true,
       colorHover: false,
       colorShow: false
     };
@@ -30,37 +26,20 @@ class Wrapper extends Component {
   }
 
   handleColorChange(color) {
-    this.setState({
-      solid: color.hsl.h !== this.state.hsl.h || !this.state.solid
-    });
-    this.setState({ hsl: color.hsl, color: color.hex });
+    this.setState({ color });
   }
 
   render() {
     return (
-      <Background
-        hsl={this.state.hsl}
-        color={this.state.color}
-        solid={this.state.solid}
-      >
+      <Background color={this.state.color}>
         <div
           onMouseEnter={() => this.handleColorHoverEnter()}
           onMouseLeave={() => this.handleColorHoverExit()}
         >
           <CustomColorPicker
             show={this.state.colorShow}
-            handleColorChange={(e) => this.handleColorChange(e)}
+            handleColorChange={(hex) => this.handleColorChange(hex)}
           />
-          {[0, 0, 0, 0, 0].map((hex) => (
-            <Circle
-              hex={
-                '#' +
-                Math.random()
-                  .toString(16)
-                  .slice(-6)
-              }
-            />
-          ))}
         </div>
         <MenuButton show={!this.state.colorShow} />
         <Time />
