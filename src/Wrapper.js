@@ -11,14 +11,14 @@ class Wrapper extends Component {
     this.state = {
       color: '',
       colorHover: false,
-      colorShow: false
+      colorShow: false,
+      nColors: 8
     };
   }
 
   handleColorHoverEnter() {
-    this.setState({ colorShow: true });
-    // this.setState({ colorHover: true });
-    // setTimeout(() => this.setState({ colorShow: this.state.colorHover }), 500);
+    this.setState({ colorHover: true });
+    setTimeout(() => this.setState({ colorShow: this.state.colorHover }), 500);
   }
 
   handleColorHoverExit() {
@@ -37,6 +37,7 @@ class Wrapper extends Component {
           onMouseLeave={() => this.handleColorHoverExit()}
         >
           <CustomColorPicker
+            nColors={this.state.nColors}
             show={this.state.colorShow}
             handleColorChange={(hex) => this.handleColorChange(hex)}
           />

@@ -7,18 +7,21 @@ class CustomColorPicker extends React.Component {
     super();
     this.state = {
       colors: [],
-      selectedColor: '',
-      nColors: 5
+      selectedColor: ''
     };
   }
 
   componentWillMount() {
+    const { nColors } = this.props;
     const localColors = localStorage.getItem('colors') || '[]';
     const selectedColor = localStorage.getItem('color') || '#555555';
     const colors = JSON.parse(localColors);
-    if (!colors.length) {
-      for (let i = 0; i < this.state.nColors; i++) {
+    if (colors.length !== nColors) {
+      while (colors.length < nColors) {
         colors.push(this.generateRandomColor());
+      }
+      while (colors.length > nColors) {
+        colors.pop();
       }
       localStorage.setItem('colors', JSON.stringify(colors));
     }
@@ -47,10 +50,11 @@ class CustomColorPicker extends React.Component {
   renderColors = () =>
     this.state.colors.map((hex) => (
       <Circle
-        handleColorChange={(hex) => this.handleColorChange(hex)}
         key={hex}
         hex={hex}
+        show={this.props.show}
         selected={this.state.selectedColor === hex}
+        handleColorChange={(hex) => this.handleColorChange(hex)}
       />
     ));
 

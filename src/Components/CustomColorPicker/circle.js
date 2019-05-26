@@ -7,6 +7,7 @@ export const Circle = (props) => {
       onClick={() => props.handleColorChange(props.hex)}
       style={{
         backgroundColor: props.hex,
+        visibility: props.show ? 'visible' : 'hidden',
         border: `2px solid ${props.selected ? '#555555' : 'transparent'}`
       }}
       className="circle"
