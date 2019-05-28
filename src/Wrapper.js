@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MenuButton from './Components/MenuButton/menuButton';
 import Time from './Components/Time/time';
 import Background from './Components/Background/background';
-import CustomColorPicker from './Components/CustomColorPicker/customColorPicker_real';
+import CustomColorPicker from './Components/CustomColorPicker/customColorPicker';
 import './wrapper.css';
 
 class Wrapper extends Component {
@@ -12,7 +12,7 @@ class Wrapper extends Component {
       color: '',
       colorHover: false,
       colorShow: false,
-      nColors: 8
+      nColors: 10
     };
   }
 
