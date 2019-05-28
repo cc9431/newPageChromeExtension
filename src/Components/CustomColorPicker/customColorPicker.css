@@ -11,6 +11,10 @@
   transform: scale(1.2);
 }
 
+.block {
+  position: absolute;
+}
+
 .swatch {
   position: absolute;
   padding: 0px 30px 30px 30px;

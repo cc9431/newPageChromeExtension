@@ -36,34 +36,37 @@ class CustomColorPicker extends React.Component {
       .toString(16)
       .slice(-6);
 
-  handleColorChange = (alt, hex) => {
-    if (alt) this.setState({ selectedColorPicker: hex });
-    else {
-      const { selectedColor, colors } = this.state;
-      if (selectedColor !== hex) {
-        this.setState({ selectedColor: hex });
-        this.props.handleColorChange(hex);
-      } else {
-        const newHex = this.generateRandomColor();
-        colors[colors.indexOf(hex)] = newHex;
-        localStorage.setItem('colors', JSON.stringify(colors));
-        this.setState({ colors });
-      }
+  handleColorChange = (ctrl, hex) => {
+    // const { selectedColor, colors } = this.state;
+    const { colors } = this.state;
+    if (ctrl) {
+      const newHex = this.generateRandomColor();
+      colors[colors.indexOf(hex)] = newHex;
+      localStorage.setItem('colors', JSON.stringify(colors));
+      this.setState({ colors });
+    } else {
+      this.setState({ selectedColor: hex });
+      this.props.handleColorChange(hex);
     }
   };
 
+  renderColor = (color) => (
+    <ColorCircle
+      key={color}
+      color={color}
+      show={this.props.show}
+      selected={this.state.selectedColor === color}
+      handleColorChange={(ctrl, color) => this.handleColorChange(ctrl, color)}
+    />
+  );
+
   renderColors = () =>
-    this.state.colors.map((color) => (
+    this.state.colors.map((color) =>
       // color === this.state.selectedColorPicker
-      // <Block key={color} color={color} />
-      <ColorCircle
-        key={color}
-        color={color}
-        show={this.props.show}
-        selected={this.state.selectedColor === color}
-        handleColorChange={(alt, color) => this.handleColorChange(alt, color)}
-      />
-    ));
+      //   ? <Block className="block" key={color} color={color} /> &&
+      //     this.renderColor(color) : this.renderColor(color)
+      this.renderColor(color)
+    );
 
   render() {
     return (

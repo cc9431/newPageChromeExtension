@@ -29,6 +29,12 @@ class Wrapper extends Component {
     this.setState({ color });
   }
 
+  componentWillMount() {
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+  }
+
   render() {
     return (
       <Background color={this.state.color}>
