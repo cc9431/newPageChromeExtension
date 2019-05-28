@@ -70,8 +70,17 @@ class CustomColorPicker extends React.Component {
 
   render() {
     return (
-      <div className={`swatch${this.props.show ? ' swatchHover' : ''}`}>
-        {this.renderColors()}
+      <div>
+        <div className={`swatch${this.props.show ? ' swatchHover' : ''}`}>
+          {this.renderColors()}
+        </div>
+        <span
+          className={`selectedColor${
+            this.props.show ? ' selectedColorHover' : ''
+          }`}
+        >
+          {this.state.selectedColor}
+        </span>
       </div>
     );
   }
