@@ -2,7 +2,6 @@ import React from 'react';
 import ColorCircle from './colorCircle';
 import Block from 'react-color/lib/Block';
 import './customColorPicker.css';
-import { cpus } from 'os';
 
 class CustomColorPicker extends React.Component {
   constructor() {
@@ -42,12 +41,12 @@ class CustomColorPicker extends React.Component {
   handleColorPick = (hex) => {
     const { colors, selectedColorPicker } = this.state;
     colors[colors.indexOf(selectedColorPicker)] = hex;
-    this.setState({ selectedColor: hex, colors, selectedColorPicker: '' });
+    this.setState({ selectedColor: hex, colors });
     this.props.handleColorChange(hex);
   };
 
   handleColorChange = (hex) => {
-    this.setState({ selectedColor: hex, selectedColorPicker: '' });
+    this.setState({ selectedColor: hex });
     this.props.handleColorChange(hex);
   };
 

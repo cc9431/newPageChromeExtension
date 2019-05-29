@@ -36,7 +36,7 @@ class Wrapper extends Component {
 
   handleBackgroundClick = () => {
     this.setState({ colorPick: false });
-    console.log('background');
+    // console.log('background');
   };
 
   componentWillMount() {
