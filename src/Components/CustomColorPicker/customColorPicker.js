@@ -8,7 +8,6 @@ class CustomColorPicker extends React.Component {
     super();
     this.state = {
       colors: [],
-      selectedColor: '',
       selectedColorPicker: '',
       x: 0,
       y: 0
@@ -18,7 +17,6 @@ class CustomColorPicker extends React.Component {
   componentWillMount() {
     const { nColors } = this.props;
     const localColors = localStorage.getItem('colors') || '[]';
-    const selectedColor = localStorage.getItem('color') || '#555555';
     const colors = JSON.parse(localColors);
     if (colors.length !== nColors) {
       while (colors.length < nColors) {
@@ -29,7 +27,7 @@ class CustomColorPicker extends React.Component {
       }
       localStorage.setItem('colors', JSON.stringify(colors));
     }
-    this.setState({ colors, selectedColor });
+    this.setState({ colors });
   }
 
   generateRandomColor = () =>
@@ -41,12 +39,12 @@ class CustomColorPicker extends React.Component {
   handleColorPick = (hex) => {
     const { colors, selectedColorPicker } = this.state;
     colors[colors.indexOf(selectedColorPicker)] = hex;
-    this.setState({ selectedColor: hex, colors });
+    this.setState({ colors, selectedColorPicker: hex });
+    localStorage.setItem('colors', JSON.stringify(colors));
     this.props.handleColorChange(hex);
   };
 
   handleColorChange = (hex) => {
-    this.setState({ selectedColor: hex });
     this.props.handleColorChange(hex);
   };
 
@@ -60,7 +58,7 @@ class CustomColorPicker extends React.Component {
       key={color}
       color={color}
       show={this.props.colorShow || this.props.colorPick}
-      selected={this.state.selectedColor === color}
+      selected={this.props.selectedColor === color}
       handleColorChange={(color) => this.handleColorChange(color)}
       handleRightClick={(x, y, color) => this.handleRightClick(x, y, color)}
     />
@@ -93,7 +91,7 @@ class CustomColorPicker extends React.Component {
         </div>
         <div className={`customPicker${colorShow ? ' hover' : ''}`}>
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
-          <span className={'selectedColor'}>{this.state.selectedColor}</span>
+          <span className={'selectedColor'}>{this.props.selectedColor}</span>
         </div>
       </div>
     );

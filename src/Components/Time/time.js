@@ -35,7 +35,7 @@ class Time extends Component {
 
   render() {
     return (
-      <div className="time">
+      <div onClick={() => this.props.handleTimeClick()} className="time">
         <div>
           <span>{this.state.time}</span>
         </div>

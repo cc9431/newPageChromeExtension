@@ -9,7 +9,7 @@ class Wrapper extends Component {
   constructor() {
     super();
     this.state = {
-      color: '',
+      selectedColor: localStorage.getItem('selectedColor') || '#123456',
       colorHover: false,
       colorShow: false,
       colorPick: false,
@@ -30,11 +30,12 @@ class Wrapper extends Component {
     this.setState({ colorPick: true });
   };
 
-  handleColorChange = (color) => {
-    this.setState({ color });
+  handleColorChange = (selectedColor) => {
+    this.setState({ selectedColor });
+    localStorage.setItem('selectedColor', selectedColor);
   };
 
-  handleBackgroundClick = () => {
+  handleOutsideColorClick = () => {
     this.setState({ colorPick: false });
     // console.log('background');
   };
@@ -46,26 +47,27 @@ class Wrapper extends Component {
   }
 
   render() {
-    const { colorShow, colorPick } = this.state;
+    const { colorShow, colorPick, selectedColor, nColors } = this.state;
     return (
       <Background
-        handleBackgroundClick={() => this.handleBackgroundClick()}
-        color={this.state.color}
+        handleBackgroundClick={() => this.handleOutsideColorClick()}
+        selectedColor={selectedColor}
       >
         <div
           onMouseEnter={() => this.handleColorHoverEnter()}
           onMouseLeave={() => this.handleColorHoverExit()}
         >
           <CustomColorPicker
-            nColors={this.state.nColors}
+            nColors={nColors}
             colorShow={colorShow}
             colorPick={colorPick}
+            selectedColor={selectedColor}
             handleRightClick={() => this.handleRightClick()}
             handleColorChange={(hex) => this.handleColorChange(hex)}
           />
         </div>
         <MenuButton show={!(colorShow || colorPick)} />
-        <Time />
+        <Time handleTimeClick={() => this.handleOutsideColorClick()} />
       </Background>
     );
   }
