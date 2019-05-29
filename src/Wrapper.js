@@ -62,6 +62,7 @@ class Wrapper extends Component {
             colorShow={colorShow}
             colorPick={colorPick}
             selectedColor={selectedColor}
+            handleColorClick={() => this.handleOutsideColorClick()}
             handleRightClick={() => this.handleRightClick()}
             handleColorChange={(hex) => this.handleColorChange(hex)}
           />

@@ -18,17 +18,30 @@ class CustomColorPicker extends React.Component {
     const { nColors } = this.props;
     const localColors = localStorage.getItem('colors') || '[]';
     const colors = JSON.parse(localColors);
-    if (colors.length !== nColors) {
-      while (colors.length < nColors) {
-        colors.push(this.generateRandomColor());
-      }
-      while (colors.length > nColors) {
-        colors.pop();
-      }
-      localStorage.setItem('colors', JSON.stringify(colors));
-    }
-    this.setState({ colors });
+    this.uniqueColors(colors, nColors);
   }
+
+  componentDidUpdate() {
+    const { nColors } = this.props;
+    const { colors } = this.state;
+    this.uniqueColors(colors, nColors);
+  }
+
+  onlyUnique = (value, index, self) => self.indexOf(value) === index;
+
+  uniqueColors = (colors, nColors) => {
+    const uniqueColors = colors.filter(this.onlyUnique);
+    if (uniqueColors.length !== nColors) {
+      while (uniqueColors.length < nColors) {
+        uniqueColors.push(this.generateRandomColor());
+      }
+      while (uniqueColors.length > nColors) {
+        uniqueColors.pop();
+      }
+      localStorage.setItem('colors', JSON.stringify(uniqueColors));
+      this.setState({ colors: uniqueColors });
+    }
+  };
 
   generateRandomColor = () =>
     '#' +
@@ -89,7 +102,10 @@ class CustomColorPicker extends React.Component {
             color={selectedColorPicker}
           />
         </div>
-        <div className={`customPicker${colorShow ? ' hover' : ''}`}>
+        <div
+          onClick={() => this.props.handleColorClick()}
+          className={`customPicker${colorShow ? ' hover' : ''}`}
+        >
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
           <span className={'selectedColor'}>{this.props.selectedColor}</span>
         </div>
