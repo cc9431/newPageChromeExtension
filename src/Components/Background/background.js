@@ -52,7 +52,11 @@ class Background extends PureComponent {
 
   render() {
     return (
-      <div style={{ backgroundColor: this.state.color }} className="background">
+      <div
+        onClick={() => this.props.handleBackgroundClick()}
+        style={{ backgroundColor: this.state.color }}
+        className="background"
+      >
         {this.props.children}
       </div>
     );

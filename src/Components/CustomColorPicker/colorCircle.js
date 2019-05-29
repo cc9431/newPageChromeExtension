@@ -3,8 +3,8 @@ import './customColorPicker.css';
 
 export const ColorCircle = (props) => (
   <button
-    onContextMenu={(e) => props.handleColorChange(true, props.color)}
-    onClick={() => props.handleColorChange(false, props.color)}
+    onContextMenu={(e) => props.handleRightClick(e.pageX, e.pageY, props.color)}
+    onClick={() => props.handleColorChange(props.color)}
     style={{
       backgroundColor: props.color,
       visibility: props.show ? 'visible' : 'hidden',

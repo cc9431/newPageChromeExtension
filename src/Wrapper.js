@@ -12,22 +12,32 @@ class Wrapper extends Component {
       color: '',
       colorHover: false,
       colorShow: false,
+      colorPick: false,
       nColors: 10
     };
   }
 
-  handleColorHoverEnter() {
+  handleColorHoverEnter = () => {
     this.setState({ colorHover: true });
     setTimeout(() => this.setState({ colorShow: this.state.colorHover }), 500);
-  }
+  };
 
-  handleColorHoverExit() {
+  handleColorHoverExit = () => {
     this.setState({ colorHover: false, colorShow: false });
-  }
+  };
 
-  handleColorChange(color) {
+  handleRightClick = () => {
+    this.setState({ colorPick: true });
+  };
+
+  handleColorChange = (color) => {
     this.setState({ color });
-  }
+  };
+
+  handleBackgroundClick = () => {
+    this.setState({ colorPick: false });
+    console.log('background');
+  };
 
   componentWillMount() {
     document.addEventListener('contextmenu', (e) => {
@@ -36,19 +46,25 @@ class Wrapper extends Component {
   }
 
   render() {
+    const { colorShow, colorPick } = this.state;
     return (
-      <Background color={this.state.color}>
+      <Background
+        handleBackgroundClick={() => this.handleBackgroundClick()}
+        color={this.state.color}
+      >
         <div
           onMouseEnter={() => this.handleColorHoverEnter()}
           onMouseLeave={() => this.handleColorHoverExit()}
         >
           <CustomColorPicker
             nColors={this.state.nColors}
-            show={this.state.colorShow}
+            colorShow={colorShow}
+            colorPick={colorPick}
+            handleRightClick={() => this.handleRightClick()}
             handleColorChange={(hex) => this.handleColorChange(hex)}
           />
         </div>
-        <MenuButton show={!this.state.colorShow} />
+        <MenuButton show={!(colorShow || colorPick)} />
         <Time />
       </Background>
     );

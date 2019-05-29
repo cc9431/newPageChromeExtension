@@ -1,7 +1,8 @@
 import React from 'react';
 import ColorCircle from './colorCircle';
-// import Block from 'react-color/lib/Block';
+import Block from 'react-color/lib/Block';
 import './customColorPicker.css';
+import { cpus } from 'os';
 
 class CustomColorPicker extends React.Component {
   constructor() {
@@ -9,7 +10,9 @@ class CustomColorPicker extends React.Component {
     this.state = {
       colors: [],
       selectedColor: '',
-      selectedColorPicker: ''
+      selectedColorPicker: '',
+      x: 0,
+      y: 0
     };
   }
 
@@ -36,51 +39,62 @@ class CustomColorPicker extends React.Component {
       .toString(16)
       .slice(-6);
 
-  handleColorChange = (ctrl, hex) => {
-    // const { selectedColor, colors } = this.state;
-    const { colors } = this.state;
-    if (ctrl) {
-      const newHex = this.generateRandomColor();
-      colors[colors.indexOf(hex)] = newHex;
-      localStorage.setItem('colors', JSON.stringify(colors));
-      this.setState({ colors });
-    } else {
-      this.setState({ selectedColor: hex });
-      this.props.handleColorChange(hex);
-    }
+  handleColorPick = (hex) => {
+    const { colors, selectedColorPicker } = this.state;
+    colors[colors.indexOf(selectedColorPicker)] = hex;
+    this.setState({ selectedColor: hex, colors, selectedColorPicker: '' });
+    this.props.handleColorChange(hex);
+  };
+
+  handleColorChange = (hex) => {
+    this.setState({ selectedColor: hex, selectedColorPicker: '' });
+    this.props.handleColorChange(hex);
+  };
+
+  handleRightClick = (x, y, selectedColorPicker) => {
+    this.setState({ x, y, selectedColorPicker });
+    this.props.handleRightClick();
   };
 
   renderColor = (color) => (
     <ColorCircle
       key={color}
       color={color}
-      show={this.props.show}
+      show={this.props.colorShow || this.props.colorPick}
       selected={this.state.selectedColor === color}
-      handleColorChange={(ctrl, color) => this.handleColorChange(ctrl, color)}
+      handleColorChange={(color) => this.handleColorChange(color)}
+      handleRightClick={(x, y, color) => this.handleRightClick(x, y, color)}
     />
   );
 
   renderColors = () =>
-    this.state.colors.map((color) =>
-      // color === this.state.selectedColorPicker
-      //   ? <Block className="block" key={color} color={color} /> &&
-      //     this.renderColor(color) : this.renderColor(color)
-      this.renderColor(color)
-    );
+    this.state.colors.map((color) => this.renderColor(color));
 
   render() {
+    const { x, y, selectedColorPicker } = this.state;
+    const colorShow = this.props.colorShow || this.props.colorPick;
+    const colorPick = this.props.colorPick && selectedColorPicker !== '';
     return (
       <div>
-        <div className={`swatch${this.props.show ? ' swatchHover' : ''}`}>
-          {this.renderColors()}
-        </div>
-        <span
-          className={`selectedColor${
-            this.props.show ? ' selectedColorHover' : ''
-          }`}
+        <div
+          style={{
+            transition: 'all 250ms ease',
+            opacity: colorPick ? 1 : 0,
+            position: 'absolute',
+            top: `${y + 15}px`,
+            left: `${x - 85}px`,
+            zIndex: colorPick ? 10 : 0
+          }}
         >
-          {this.state.selectedColor}
-        </span>
+          <Block
+            onChange={(color) => this.handleColorPick(color.hex)}
+            color={selectedColorPicker}
+          />
+        </div>
+        <div className={`customPicker${colorShow ? ' hover' : ''}`}>
+          <div className={'swatch'}>{this.renderColors(colorShow)}</div>
+          <span className={'selectedColor'}>{this.state.selectedColor}</span>
+        </div>
       </div>
     );
   }
