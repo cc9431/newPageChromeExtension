@@ -82,7 +82,8 @@ class CustomColorPicker extends React.Component {
             position: 'absolute',
             top: `${y + 15}px`,
             left: `${x - 85}px`,
-            visibility: colorPick ? 'visible' : 'hidden'
+            visibility: colorPick ? 'visible' : 'hidden',
+            zIndex: 4
           }}
         >
           <Block
