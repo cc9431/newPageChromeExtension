@@ -21,8 +21,8 @@ class CustomColorPicker extends React.Component {
     this.uniqueColors(colors, nColors);
   }
 
-  componentDidUpdate() {
-    const { nColors } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { nColors } = nextProps;
     const { colors } = this.state;
     this.uniqueColors(colors, nColors);
   }
@@ -38,9 +38,9 @@ class CustomColorPicker extends React.Component {
       while (uniqueColors.length > nColors) {
         uniqueColors.pop();
       }
-      localStorage.setItem('colors', JSON.stringify(uniqueColors));
-      this.setState({ colors: uniqueColors });
     }
+    localStorage.setItem('colors', JSON.stringify(uniqueColors));
+    this.setState({ colors: uniqueColors });
   };
 
   generateRandomColor = () =>
