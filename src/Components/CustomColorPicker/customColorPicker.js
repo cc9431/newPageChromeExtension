@@ -62,8 +62,15 @@ class CustomColorPicker extends React.Component {
   };
 
   handleRightClick = (x, y, selectedColorPicker) => {
-    this.setState({ x, y, selectedColorPicker });
-    this.props.handleRightClick();
+    if (
+      this.props.colorPick &&
+      selectedColorPicker === this.state.selectedColorPicker
+    ) {
+      this.handleColorPick(this.generateRandomColor());
+    } else {
+      this.setState({ x, y, selectedColorPicker });
+      this.props.handleRightClick();
+    }
   };
 
   renderColor = (color) => (
