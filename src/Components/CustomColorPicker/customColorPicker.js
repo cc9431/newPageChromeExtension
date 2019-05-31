@@ -79,6 +79,7 @@ class CustomColorPicker extends React.Component {
       color={color}
       show={this.props.colorShow || this.props.colorPick}
       selected={this.props.selectedColor === color}
+      pick={this.state.selectedColorPicker === color && this.props.colorPick}
       handleColorChange={(color) => this.handleColorChange(color)}
       handleRightClick={(x, y, color) => this.handleRightClick(x, y, color)}
     />

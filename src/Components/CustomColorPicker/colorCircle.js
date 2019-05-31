@@ -8,7 +8,8 @@ export const ColorCircle = (props) => (
     style={{
       backgroundColor: props.color,
       visibility: props.show ? 'visible' : 'hidden',
-      border: `2px solid ${props.selected ? '#555555' : 'transparent'}`
+      border: `2px solid ${props.selected ? '#555555' : 'transparent'}`,
+      transform: props.pick ? 'translate(0, -3px)' : ''
     }}
     className="circle"
   />
