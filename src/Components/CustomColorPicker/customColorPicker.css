@@ -34,7 +34,7 @@
   text-align: left;
   font-size: 18px;
   font-family: 'HelveticaNeue-UltraLight';
-  /* text-shadow: 2px 2px black; TODO */
+  text-shadow: 1px 1px black;
   color: white;
   -moz-user-select: all;
   -webkit-user-select: all;
