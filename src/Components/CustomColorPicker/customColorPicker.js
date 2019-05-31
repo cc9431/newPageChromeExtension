@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorCircle from './colorCircle';
-import Block from 'react-color/lib/Block';
+import Twitter from 'react-color/lib/Twitter';
 import './customColorPicker.css';
 
 class CustomColorPicker extends React.Component {
@@ -98,13 +98,13 @@ class CustomColorPicker extends React.Component {
             transition: 'all 250ms ease',
             opacity: colorPick ? 1 : 0,
             position: 'absolute',
-            top: `${y + 15}px`,
-            left: `${x - 85}px`,
+            top: `${y + 12}px`,
+            left: `${x - 20}px`,
             visibility: colorPick ? 'visible' : 'hidden',
             zIndex: 4
           }}
         >
-          <Block
+          <Twitter
             onChange={(color) => this.handleColorPick(color.hex)}
             color={selectedColorPicker}
           />

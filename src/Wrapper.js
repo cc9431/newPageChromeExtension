@@ -44,8 +44,19 @@ class Wrapper extends Component {
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) this.setState({ colorPick: false });
+    });
   }
 
+  componentWillUnmount() {
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) this.setState({ colorPick: false });
+    });
+    document.removeEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+  }
   render() {
     const { colorShow, colorPick, selectedColor, nColors } = this.state;
     return (
