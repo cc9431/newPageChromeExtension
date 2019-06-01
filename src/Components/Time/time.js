@@ -6,17 +6,22 @@ class Time extends Component {
   constructor() {
     super();
     this.state = {
-      time: '',
+      minutes: '',
+      hours: '',
       seconds: '',
       date: ''
     };
   }
 
   setDateTime() {
+    const [hours, minutes, seconds, ...date] = moment()
+      .format('hh mm ss LL')
+      .split(' ');
     this.setState({
-      time: moment().format('hh mm'),
-      seconds: moment().format('ss'),
-      date: moment().format('LL')
+      hours,
+      minutes,
+      seconds,
+      date: date.join(' ')
     });
   }
 
@@ -39,9 +44,10 @@ class Time extends Component {
     return (
       <div onClick={() => this.props.handleTimeClick()} className="time">
         <div style={{ display: 'inline-flex' }}>
-          <span>{this.state.time}</span>
+          <span>{this.state.hours}</span>
+          <span className="timeSpan">{this.state.minutes}</span>
           {this.props.showSeconds && (
-            <span style={{ marginLeft: '20px' }}>{this.state.seconds}</span>
+            <span className="timeSpan">{this.state.seconds}</span>
           )}
         </div>
         <div>

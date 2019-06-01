@@ -16,9 +16,6 @@
 }
 
 .time span {
-  padding: 0;
-  margin: 0;
-  display: inherit;
   justify-self: center;
   font-size: 12vw;
   font-family: 'HelveticaNeue-UltraLight';
@@ -26,17 +23,19 @@
 }
 
 .time p {
-  padding: 0;
-  margin: 0;
-  display: inherit;
   justify-self: center;
-  font-size: 2vw;
+  font-size: 3vw;
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
 }
 
+.timeSpan {
+  margin-left: 20px;
+}
+
 .timeSetting {
   font-family: 'HelveticaNeue-UltraLight';
+  width: max-content;
   color: whitesmoke;
   text-align: left;
   font-size: 18px;

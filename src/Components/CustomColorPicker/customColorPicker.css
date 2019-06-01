@@ -23,6 +23,7 @@
   font-size: 18px;
   font-family: 'HelveticaNeue-UltraLight';
   text-shadow: 1px 1px black;
+  width: max-content;
   color: white;
   -moz-user-select: all;
   -webkit-user-select: all;
