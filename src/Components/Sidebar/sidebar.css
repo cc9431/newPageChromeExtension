@@ -1,16 +1,19 @@
 .sidebar {
   top: 0;
   left: -180px;
+  z-index: 2;
   position: absolute;
   padding: 30px;
   display: grid;
   grid-gap: 20px;
   grid-template-rows: repeat(1fr);
+  visibility: hidden;
   opacity: 0;
   transition: all 500ms ease;
 }
 
 .hover {
-  opacity: 1;
   left: 0;
+  visibility: visible;
+  opacity: 1;
 }

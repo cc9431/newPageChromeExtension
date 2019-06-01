@@ -77,7 +77,6 @@ class CustomColorPicker extends React.Component {
     <ColorCircle
       key={color}
       color={color}
-      show={this.props.sidebarShow || this.props.colorPick}
       selected={this.props.selectedColor === color}
       pick={this.state.selectedColorPicker === color && this.props.colorPick}
       handleColorChange={(color) => this.handleColorChange(color)}

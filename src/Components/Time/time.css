@@ -39,5 +39,7 @@
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
   text-align: left;
+  font-size: 18px;
   text-shadow: 1px 1px black;
+  cursor: pointer;
 }

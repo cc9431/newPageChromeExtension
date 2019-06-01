@@ -12,7 +12,7 @@ class Wrapper extends Component {
     super();
     this.state = {
       selectedColor: localStorage.getItem('selectedColor') || '#123456',
-      sidebarHover: false,
+      menuHover: false,
       sidebarShow: false,
       showSeconds: JSON.parse(localStorage.getItem('showSeconds') || 'true'),
       colorPick: false,
@@ -20,16 +20,17 @@ class Wrapper extends Component {
     };
   }
 
-  handleSidebarHoverEnter = () => {
-    this.setState({ sidebarHover: true });
-    setTimeout(
-      () => this.setState({ sidebarShow: this.state.sidebarHover }),
-      500
-    );
+  handleMenuEnter = () => {
+    this.setState({ menuHover: true });
+    setTimeout(() => this.setState({ sidebarShow: this.state.menuHover }), 500);
+  };
+
+  handleMenuExit = () => {
+    this.setState({ menuHover: false });
   };
 
   handleSidebarHoverExit = () => {
-    this.setState({ sidebarHover: false, sidebarShow: false });
+    this.setState({ menuHover: false, sidebarShow: false });
   };
 
   handleRightClick = () => {
@@ -72,8 +73,6 @@ class Wrapper extends Component {
   }
   render() {
     const { sidebarShow, colorPick, selectedColor, nColors } = this.state;
-    // const { colorPick, selectedColor, nColors } = this.state;
-    // const sidebarShow = true;
 
     return (
       <Background
@@ -96,7 +95,8 @@ class Wrapper extends Component {
           />
         </Sidebar>
         <MenuButton
-          enter={() => this.handleSidebarHoverEnter()}
+          enter={() => this.handleMenuEnter()}
+          exit={() => this.handleMenuExit()}
           show={!(sidebarShow || colorPick)}
         />
         <Time
