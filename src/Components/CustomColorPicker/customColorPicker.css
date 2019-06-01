@@ -1,19 +1,7 @@
 .customPicker {
-  top: -40px;
   display: grid;
   grid-gap: 20px;
   grid-template-rows: repeat(1fr);
-  position: absolute;
-  opacity: 0;
-  transition: all 400ms ease-in-out;
-  z-index: 3;
-  padding: 0px 30px 30px 30px;
-}
-
-.hover {
-  top: 0;
-  opacity: 1;
-  padding: 30px;
 }
 
 .circle {

@@ -77,7 +77,7 @@ class CustomColorPicker extends React.Component {
     <ColorCircle
       key={color}
       color={color}
-      show={this.props.colorShow || this.props.colorPick}
+      show={this.props.sidebarShow || this.props.colorPick}
       selected={this.props.selectedColor === color}
       pick={this.state.selectedColorPicker === color && this.props.colorPick}
       handleColorChange={(color) => this.handleColorChange(color)}
@@ -90,7 +90,7 @@ class CustomColorPicker extends React.Component {
 
   render() {
     const { x, y, selectedColorPicker } = this.state;
-    const colorShow = this.props.colorShow || this.props.colorPick;
+    const colorShow = this.props.sidebarShow || this.props.colorPick;
     const colorPick = this.props.colorPick && selectedColorPicker !== '';
     return (
       <div>
@@ -112,7 +112,7 @@ class CustomColorPicker extends React.Component {
         </div>
         <div
           onClick={() => this.props.handleColorClick()}
-          className={`customPicker${colorShow ? ' hover' : ''}`}
+          className="customPicker"
         >
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
           <span className={'selectedColor'}>{this.props.selectedColor}</span>

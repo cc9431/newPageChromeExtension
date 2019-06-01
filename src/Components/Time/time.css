@@ -34,3 +34,10 @@
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
 }
+
+.timeSetting {
+  font-family: 'HelveticaNeue-UltraLight';
+  color: whitesmoke;
+  text-align: left;
+  text-shadow: 1px 1px black;
+}

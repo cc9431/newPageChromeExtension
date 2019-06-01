@@ -7,13 +7,15 @@ class Time extends Component {
     super();
     this.state = {
       time: '',
+      seconds: '',
       date: ''
     };
   }
 
   setDateTime() {
     this.setState({
-      time: moment().format('hh mm ss'),
+      time: moment().format('hh mm'),
+      seconds: moment().format('ss'),
       date: moment().format('LL')
     });
   }
@@ -36,8 +38,11 @@ class Time extends Component {
   render() {
     return (
       <div onClick={() => this.props.handleTimeClick()} className="time">
-        <div>
+        <div style={{ display: 'inline-flex' }}>
           <span>{this.state.time}</span>
+          {this.props.showSeconds && (
+            <span style={{ marginLeft: '20px' }}>{this.state.seconds}</span>
+          )}
         </div>
         <div>
           <p>{this.state.date}</p>

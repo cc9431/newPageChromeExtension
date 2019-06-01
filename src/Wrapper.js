@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import MenuButton from './Components/MenuButton/menuButton';
 import Time from './Components/Time/time';
+import TimeSetting from './Components/Time/timeSetting';
 import Background from './Components/Background/background';
+import Sidebar from './Components/Sidebar/sidebar';
 import CustomColorPicker from './Components/CustomColorPicker/customColorPicker';
 import './wrapper.css';
 
@@ -10,20 +12,24 @@ class Wrapper extends Component {
     super();
     this.state = {
       selectedColor: localStorage.getItem('selectedColor') || '#123456',
-      colorHover: false,
-      colorShow: false,
+      sidebarHover: false,
+      sidebarShow: false,
+      showSeconds: JSON.parse(localStorage.getItem('showSeconds') || 'true'),
       colorPick: false,
       nColors: 10
     };
   }
 
-  handleColorHoverEnter = () => {
-    this.setState({ colorHover: true });
-    setTimeout(() => this.setState({ colorShow: this.state.colorHover }), 500);
+  handleSidebarHoverEnter = () => {
+    this.setState({ sidebarHover: true });
+    setTimeout(
+      () => this.setState({ sidebarShow: this.state.sidebarHover }),
+      500
+    );
   };
 
-  handleColorHoverExit = () => {
-    this.setState({ colorHover: false, colorShow: false });
+  handleSidebarHoverExit = () => {
+    this.setState({ sidebarHover: false, sidebarShow: false });
   };
 
   handleRightClick = () => {
@@ -37,6 +43,14 @@ class Wrapper extends Component {
 
   handleOutsideColorClick = () => {
     this.setState({ colorPick: false });
+  };
+
+  handleSecondsToggle = () => {
+    localStorage.setItem(
+      'showSeconds',
+      this.state.showSeconds ? 'false' : 'true'
+    );
+    this.setState({ showSeconds: !this.state.showSeconds });
   };
 
   componentWillMount() {
@@ -57,28 +71,38 @@ class Wrapper extends Component {
     });
   }
   render() {
-    const { colorShow, colorPick, selectedColor, nColors } = this.state;
+    const { sidebarShow, colorPick, selectedColor, nColors } = this.state;
+    // const { colorPick, selectedColor, nColors } = this.state;
+    // const sidebarShow = true;
+
     return (
       <Background
         handleBackgroundClick={() => this.handleOutsideColorClick()}
         selectedColor={selectedColor}
       >
-        <div
-          onMouseEnter={() => this.handleColorHoverEnter()}
-          onMouseLeave={() => this.handleColorHoverExit()}
-        >
+        <Sidebar exit={() => this.handleSidebarHoverExit()} show={sidebarShow}>
           <CustomColorPicker
             nColors={nColors}
-            colorShow={colorShow}
+            sidebarShow={sidebarShow}
             colorPick={colorPick}
             selectedColor={selectedColor}
             handleColorClick={() => this.handleOutsideColorClick()}
             handleRightClick={() => this.handleRightClick()}
             handleColorChange={(hex) => this.handleColorChange(hex)}
           />
-        </div>
-        <MenuButton show={!(colorShow || colorPick)} />
-        <Time handleTimeClick={() => this.handleOutsideColorClick()} />
+          <TimeSetting
+            toggleSeconds={() => this.handleSecondsToggle()}
+            showSeconds={this.state.showSeconds}
+          />
+        </Sidebar>
+        <MenuButton
+          enter={() => this.handleSidebarHoverEnter()}
+          show={!(sidebarShow || colorPick)}
+        />
+        <Time
+          showSeconds={this.state.showSeconds}
+          handleTimeClick={() => this.handleOutsideColorClick()}
+        />
       </Background>
     );
   }
