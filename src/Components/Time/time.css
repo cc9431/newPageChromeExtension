@@ -16,7 +16,9 @@
 }
 
 .time span {
+  width: 125px;
   justify-self: center;
+  text-align: center;
   font-size: 12vw;
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
@@ -27,10 +29,6 @@
   font-size: 3vw;
   font-family: 'HelveticaNeue-UltraLight';
   color: whitesmoke;
-}
-
-.timeSpan {
-  margin-left: 20px;
 }
 
 .timeSetting {

@@ -45,10 +45,8 @@ class Time extends Component {
       <div onClick={() => this.props.handleTimeClick()} className="time">
         <div style={{ display: 'inline-flex' }}>
           <span>{this.state.hours}</span>
-          <span className="timeSpan">{this.state.minutes}</span>
-          {this.props.showSeconds && (
-            <span className="timeSpan">{this.state.seconds}</span>
-          )}
+          <span>{this.state.minutes}</span>
+          {this.props.showSeconds && <span>{this.state.seconds}</span>}
         </div>
         <div>
           <p>{this.state.date}</p>
