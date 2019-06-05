@@ -30,7 +30,7 @@ class Wrapper extends Component {
   };
 
   handleSidebarHoverExit = () => {
-    this.setState({ menuHover: false, sidebarShow: false });
+    this.setState({ colorPick: false, menuHover: false, sidebarShow: false });
   };
 
   handleRightClick = () => {
