@@ -21,7 +21,7 @@ class Wrapper extends Component {
   }
 
   handleMenuClick = () => {
-    this.setState({ sidebarShow: true, menuHover: true });
+    this.setState({ sidebarShow: !this.state.sidebarShow });
   };
 
   handleMenuEnter = () => {
@@ -101,6 +101,7 @@ class Wrapper extends Component {
         <MenuButton
           enter={() => this.handleMenuEnter()}
           exit={() => this.handleMenuExit()}
+          hideOrShow={() => this.handleMenuClick()}
           show={!(sidebarShow || colorPick)}
         />
         <Time
