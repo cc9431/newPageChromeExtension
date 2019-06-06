@@ -3,6 +3,26 @@
   src: url(../../fonts/HelveticaNeue-UltraLight.otf) format('otf');
 }
 
+@font-face {
+  font-family: 'IBMPlexMono-Thin';
+  src: url(../../fonts/IBMPlexMono-Thin.ttf);
+}
+
+@font-face {
+  font-family: 'SourceCodePro-ExtraLight';
+  src: url(../../fonts/SourceCodePro-ExtraLight.ttf);
+}
+
+@font-face {
+  font-family: 'BPdotsSquareLight';
+  src: url(../../fonts/BPdotsSquareLight.otf);
+}
+
+@font-face {
+  font-family: 'Mono';
+  src: url(../../fonts/Mono.otf) format('otf');
+}
+
 @media screen and (min-width: 1200px) {
   span {
     font-size: 36px;
@@ -20,19 +40,19 @@
   justify-self: center;
   text-align: center;
   font-size: 12vw;
-  font-family: 'HelveticaNeue-UltraLight';
+  font-family: 'SourceCodePro-ExtraLight';
   color: whitesmoke;
 }
 
 .time p {
   justify-self: center;
   font-size: 3vw;
-  font-family: 'HelveticaNeue-UltraLight';
+  font-family: 'SourceCodePro-ExtraLight';
   color: whitesmoke;
 }
 
 .timeSetting {
-  font-family: 'HelveticaNeue-UltraLight';
+  font-family: 'SourceCodePro-ExtraLight';
   width: max-content;
   color: whitesmoke;
   text-align: left;
