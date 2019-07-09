@@ -1,7 +1,7 @@
 import React from 'react';
 import './customColorPicker.css';
 
-export const ColorCircle = (props) => (
+const ColorCircle = (props) => (
   <button
     onContextMenu={(e) => props.handleRightClick(e.pageX, e.pageY, props.color)}
     onClick={() => props.handleColorChange(props.color)}
