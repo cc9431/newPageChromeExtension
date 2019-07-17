@@ -13,13 +13,11 @@
 }
 
 .menuButton:hover {
-  filter: invert(0.8);
-  -webkit-filter: invert(0.8);
+  opacity: 0.8;
 }
 
 .menuButton:active {
-  filter: invert(0.2);
-  -webkit-filter: invert(0.2);
+  opacity: 0;
 }
 
 .menuButtonHover {

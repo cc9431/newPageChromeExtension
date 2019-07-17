@@ -2,7 +2,7 @@ import React from 'react';
 import './menuButton.css';
 
 const MenuButton = (props) => (
-  <div onClick={() => props.hideOrShow()}>
+  <div onMouseDown={() => props.hideOrShow()}>
     <img
       // onMouseEnter={() => props.enter()}
       // onMouseLeave={() => props.exit()}
