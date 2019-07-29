@@ -75,6 +75,7 @@ class Wrapper extends Component {
       e.preventDefault();
     });
   }
+
   render() {
     const { sidebarShow, colorPick, selectedColor, nColors } = this.state;
 

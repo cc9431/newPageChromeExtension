@@ -1,11 +1,13 @@
 import moment from 'moment';
 import React, { Component } from 'react';
+// import { CSSTransitionGroup } from 'react-transition-group';
 import './time.css';
 
 class Time extends Component {
   constructor() {
     super();
     this.state = {
+      show: false,
       minutes: '',
       hours: '',
       seconds: '',
@@ -38,11 +40,16 @@ class Time extends Component {
     setTimeout(() => this.startClock(), 1000 - moment().milliseconds());
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    setTimeout(() => this.setState({ show: true }), 50);
+  }
 
   render() {
     return (
-      <div onClick={() => this.props.handleTimeClick()} className="time">
+      <div
+        onClick={() => this.props.handleTimeClick()}
+        className={this.state.show ? 'time show' : 'time'}
+      >
         <div style={{ display: 'inline-flex' }}>
           <span>{this.state.hours}</span>
           <span>{this.state.minutes}</span>
