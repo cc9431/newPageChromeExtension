@@ -17,7 +17,7 @@ class Time extends Component {
 
   setDateTime() {
     const [hours, minutes, seconds, ...date] = moment()
-      .format('hh mm ss LL')
+      .format('hh mm ss dddd, LL')
       .split(' ');
     this.setState({
       hours,
