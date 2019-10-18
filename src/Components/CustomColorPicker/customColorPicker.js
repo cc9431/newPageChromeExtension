@@ -9,6 +9,7 @@ class CustomColorPicker extends React.Component {
     this.state = {
       colors: [],
       selectedColorPicker: '',
+      draggingColorIndex: -1,
       x: 0,
       y: 0
     };
@@ -73,19 +74,29 @@ class CustomColorPicker extends React.Component {
     }
   };
 
-  renderColor = (color) => (
+  renderColor = (color, index) => (
     <ColorCircle
       key={color}
       color={color}
+      index={index}
       selected={this.props.selectedColor === color}
       pick={this.state.selectedColorPicker === color && this.props.colorPick}
+      handleDragColorStart={() => this.setState({ draggingColorIndex: index })}
+      handleDragColorEnd={() => this.setState({ draggingColorIndex: -1 })}
+      handleSwitchColors={() => {
+        const { colors, draggingColorIndex } = this.state;
+        const draggingColor = colors[draggingColorIndex];
+        colors[index] = draggingColor;
+        colors[draggingColorIndex] = color;
+        this.setState({ colors, draggingColorIndex: index });
+      }}
       handleColorChange={(color) => this.handleColorChange(color)}
       handleRightClick={(x, y, color) => this.handleRightClick(x, y, color)}
     />
   );
 
   renderColors = () =>
-    this.state.colors.map((color) => this.renderColor(color));
+    this.state.colors.map((color, index) => this.renderColor(color, index));
 
   render() {
     const { x, y, selectedColorPicker } = this.state;
