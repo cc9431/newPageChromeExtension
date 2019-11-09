@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { Component } from 'react';
-// import { CSSTransitionGroup } from 'react-transition-group';
+import Weather from '../../Components/Weather/weather';
 import './time.css';
 
 class Time extends Component {
@@ -56,8 +56,9 @@ class Time extends Component {
           {this.props.showSeconds && <span>{this.state.seconds}</span>}
         </div>
         <div>
-          <p>{this.state.date}</p>
+          <p style={{ width: '20em' }}>{this.state.date}</p>
         </div>
+        <Weather weather={this.props.weather} />
       </div>
     );
   }

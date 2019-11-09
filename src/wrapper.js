@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import moment from 'moment';
 import MenuButton from './Components/MenuButton/menuButton';
 import Time from './Components/Time/time';
 import TimeSetting from './Components/Time/timeSetting';
@@ -16,7 +18,13 @@ class Wrapper extends Component {
       sidebarShow: false,
       showSeconds: JSON.parse(localStorage.getItem('showSeconds') || 'true'),
       colorPick: false,
-      nColors: 10
+      nColors: 10,
+      weather: {
+        temperature: '0',
+        description: '',
+        sunrise: moment(),
+        sunset: moment()
+      }
     };
   }
 
@@ -58,7 +66,51 @@ class Wrapper extends Component {
     this.setState({ showSeconds: !this.state.showSeconds });
   };
 
+  posSuccess = (pos) => {
+    const { coords } = pos;
+    const { latitude, longitude } = coords;
+    console.log({ latitude, longitude });
+    const headers = { 'Access-Control-Allow-Origin': '*' };
+    const mainUrl = 'https://api.openweathermap.org/data/2.5/weather?';
+    const appid = '200d258baeb23b1e06697947c860ca81';
+    const units = 'imperial';
+    axios
+      .get(
+        `${mainUrl}lat=${latitude}&lon=${longitude}&units=${units}&appid=${appid}`,
+        headers
+      )
+      .then(({ data }) => {
+        const { weather, main, sys } = data;
+        const description = weather.length ? weather[0].description : '';
+        const sunrise = sys.sunrise ? moment.unix(sys.sunrise) : moment();
+        const sunset = sys.sunset ? moment.unix(sys.sunset) : moment();
+        console.log('description', description);
+        console.log(
+          `current: ${main.temp}, high: ${main.temp_max}, low: ${main.temp_min}`
+        );
+        console.log(
+          `sunrise: ${sunrise.format('h:mm a')}, sunset: ${sunset.format(
+            'h:mm a'
+          )}`
+        );
+        this.setState({
+          weather: {
+            description,
+            temperature: main.temp,
+            sunrise,
+            sunset
+          }
+        });
+      })
+      .catch();
+  };
+
+  posError = (err) => {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  };
+
   componentWillMount() {
+    navigator.geolocation.getCurrentPosition(this.posSuccess, this.posError);
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
@@ -77,8 +129,13 @@ class Wrapper extends Component {
   }
 
   render() {
-    const { sidebarShow, colorPick, selectedColor, nColors } = this.state;
-
+    const {
+      sidebarShow,
+      colorPick,
+      selectedColor,
+      nColors,
+      weather
+    } = this.state;
     return (
       <Background
         handleBackgroundClick={() => this.handleOutsideColorClick()}
@@ -106,6 +163,7 @@ class Wrapper extends Component {
           show={!(sidebarShow || colorPick)}
         />
         <Time
+          weather={this.state.weather}
           showSeconds={this.state.showSeconds}
           handleTimeClick={() => this.handleOutsideColorClick()}
         />

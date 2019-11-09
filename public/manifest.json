@@ -4,7 +4,7 @@
   "author": "Charles Calder",
   "manifest_version": 2,
   "version": "0.1",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "geolocation"],
   "chrome_url_overrides": {
     "newtab": "index.html"
   }
