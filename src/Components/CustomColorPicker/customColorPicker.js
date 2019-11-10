@@ -126,7 +126,10 @@ class CustomColorPicker extends React.Component {
           className="customPicker"
         >
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
-          <span className={'selectedColor'}>{this.props.selectedColor}</span>
+          <div>
+            <div className="settingLabel">Current Color</div>
+            <div className={'selectedColor'}>{this.props.selectedColor}</div>
+          </div>
         </div>
       </div>
     );

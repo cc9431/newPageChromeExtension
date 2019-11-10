@@ -20,6 +20,7 @@ class Wrapper extends Component {
       colorPick: false,
       nColors: 10,
       weather: {
+        zip: localStorage.getItem('zip') || '11201',
         temperature: '0',
         description: '',
         sunrise: moment(),
@@ -66,19 +67,15 @@ class Wrapper extends Component {
     this.setState({ showSeconds: !this.state.showSeconds });
   };
 
-  posSuccess = (pos) => {
-    const { coords } = pos;
-    const { latitude, longitude } = coords;
-    console.log({ latitude, longitude });
+  getWeather = (pos) => {
+    const { zip } = this.state.weather;
+    if (!zip) return;
     const headers = { 'Access-Control-Allow-Origin': '*' };
     const mainUrl = 'https://api.openweathermap.org/data/2.5/weather?';
     const appid = '200d258baeb23b1e06697947c860ca81';
     const units = 'imperial';
     axios
-      .get(
-        `${mainUrl}lat=${latitude}&lon=${longitude}&units=${units}&appid=${appid}`,
-        headers
-      )
+      .get(`${mainUrl}zip=${zip},us&units=${units}&appid=${appid}`, headers)
       .then(({ data }) => {
         const { weather, main, sys } = data;
         const description = weather.length ? weather[0].description : '';
@@ -105,12 +102,21 @@ class Wrapper extends Component {
       .catch();
   };
 
-  posError = (err) => {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+  updateZip = (e) => {
+    const { weather } = this.state;
+    const zip = e.target.value.trim();
+    weather.zip = zip;
+    this.setState({ weather });
+  };
+
+  saveZip = () => {
+    const { zip } = this.state.weather;
+    localStorage.setItem('zip', zip);
+    this.getWeather();
   };
 
   componentWillMount() {
-    navigator.geolocation.getCurrentPosition(this.posSuccess, this.posError);
+    this.getWeather();
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
@@ -134,7 +140,8 @@ class Wrapper extends Component {
       colorPick,
       selectedColor,
       nColors,
-      weather
+      weather,
+      showSeconds
     } = this.state;
     return (
       <Background
@@ -153,8 +160,22 @@ class Wrapper extends Component {
           />
           <TimeSetting
             toggleSeconds={() => this.handleSecondsToggle()}
-            showSeconds={this.state.showSeconds}
+            showSeconds={showSeconds}
           />
+          <div>
+            <div className="settingLabel">Weather Zip Code</div>
+            <div style={{ width: 210, display: 'inline-flex' }}>
+              <input
+                className="zipCode"
+                type="text"
+                value={weather.zip}
+                onChange={(e) => this.updateZip(e)}
+              />
+              <button className="zipCodeSave" onClick={() => this.saveZip()}>
+                Save
+              </button>
+            </div>
+          </div>
         </Sidebar>
         <MenuButton
           enter={() => this.handleMenuEnter()}
@@ -163,8 +184,8 @@ class Wrapper extends Component {
           show={!(sidebarShow || colorPick)}
         />
         <Time
-          weather={this.state.weather}
-          showSeconds={this.state.showSeconds}
+          weather={weather}
+          showSeconds={showSeconds}
           handleTimeClick={() => this.handleOutsideColorClick()}
         />
       </Background>
