@@ -82,7 +82,10 @@ class CustomColorPicker extends React.Component {
       isDragging={this.state.draggingColorIndex === index}
       selected={this.props.selectedColor === color}
       pick={this.state.selectedColorPicker === color && this.props.colorPick}
-      handleDragColorStart={() => this.setState({ draggingColorIndex: index })}
+      handleDragColorStart={() => {
+        this.props.handleColorClick();
+        this.setState({ draggingColorIndex: index });
+      }}
       handleDragColorEnd={() => this.setState({ draggingColorIndex: -1 })}
       handleSwitchColors={() => {
         const { colors, draggingColorIndex } = this.state;

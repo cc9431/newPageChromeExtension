@@ -71,8 +71,8 @@ class Wrapper extends Component {
     const { zip } = this.state.weather;
     if (!zip) return;
     const headers = { 'Access-Control-Allow-Origin': '*' };
-    const mainUrl = 'https://api.openweathermap.org/data/2.5/weather?';
-    const appid = '200d258baeb23b1e06697947c860ca81';
+    const mainUrl = process.env.OPEN_WEATHER_URL;
+    const appid = process.env.OPEN_WEATHER_APP_ID;
     const units = 'imperial';
     axios
       .get(`${mainUrl}zip=${zip},us&units=${units}&appid=${appid}`, headers)
