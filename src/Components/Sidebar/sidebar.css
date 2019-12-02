@@ -6,7 +6,6 @@
   padding: 30px 20px 20px 30px;
   display: grid;
   grid-gap: 20px;
-  grid-template-rows: repeat(1fr);
   visibility: hidden;
   opacity: 0;
   transition: all 500ms ease;

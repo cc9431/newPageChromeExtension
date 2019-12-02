@@ -8,7 +8,7 @@ const Weather = (props) => {
   const text = description ? `${description}, ${temperature}˚` : '';
   return (
     <div>
-      <p style={{ marginTop: '5em', fontSize: 25 }}>{text}</p>
+      <p style={{ marginTop: 150, fontSize: 'calc(10px + 2vw)' }}>{text}</p>
     </div>
   );
 };

@@ -45,8 +45,11 @@ class Time extends Component {
   }
 
   render() {
+    const style = {};
+    if (this.props.sidebarShow) style.filter = 'blur(4px)';
     return (
       <div
+        style={style}
         onClick={() => this.props.handleTimeClick()}
         className={this.state.show ? 'time show' : 'time'}
       >

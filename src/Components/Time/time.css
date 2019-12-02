@@ -30,7 +30,7 @@
 }
 .time {
   position: absolute;
-  transition: opacity ease 1.5s, top ease 1s;
+  transition: opacity ease 1.5s, top ease 1s, filter ease 1s;
   top: 35%;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -41,7 +41,7 @@
   width: 16vw;
   justify-self: center;
   text-align: center;
-  font-size: 12vw;
+  font-size: calc(42px + 5vw);
   font-family: 'SourceCodePro-ExtraLight';
   color: whitesmoke;
 }
@@ -53,7 +53,7 @@
 
 .time p {
   justify-self: center;
-  font-size: 3vw;
+  font-size: calc(10px + 3vw);
   font-family: 'SourceCodePro-ExtraLight';
   color: whitesmoke;
 }

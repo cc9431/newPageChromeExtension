@@ -168,7 +168,7 @@ class Wrapper extends Component {
               <input
                 className="zipCode"
                 type="text"
-                value={weather.zip || ''}
+                value={weather.zip}
                 onChange={(e) => this.updateZip(e)}
               />
               <button className="zipCodeSave" onClick={() => this.saveZip()}>
@@ -184,6 +184,7 @@ class Wrapper extends Component {
           show={!(sidebarShow || colorPick)}
         />
         <Time
+          sidebarShow={sidebarShow}
           weather={weather}
           showSeconds={showSeconds}
           handleTimeClick={() => this.handleOutsideColorClick()}
