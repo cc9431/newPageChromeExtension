@@ -38,11 +38,7 @@ class Wrapper extends Component {
     setTimeout(() => this.setState({ sidebarShow: this.state.menuHover }), 500);
   };
 
-  handleMenuExit = () => {
-    this.setState({ menuHover: false });
-  };
-
-  handleSidebarHoverExit = () => {
+  handleSidebarExit = () => {
     this.setState({ colorPick: false, menuHover: false, sidebarShow: false });
   };
 
@@ -145,10 +141,13 @@ class Wrapper extends Component {
     } = this.state;
     return (
       <Background
-        handleBackgroundClick={() => this.handleOutsideColorClick()}
+        handleBackgroundClick={() => this.handleSidebarExit()}
         selectedColor={selectedColor}
       >
-        <Sidebar exit={() => this.handleSidebarHoverExit()} show={sidebarShow}>
+        <Sidebar 
+          handleColorClick={() => this.handleOutsideColorClick()}
+          show={sidebarShow}
+        >
           <CustomColorPicker
             nColors={nColors}
             sidebarShow={sidebarShow}
@@ -179,7 +178,6 @@ class Wrapper extends Component {
         </Sidebar>
         <MenuButton
           enter={() => this.handleMenuEnter()}
-          exit={() => this.handleMenuExit()}
           hideOrShow={() => this.handleMenuClick()}
           show={!(sidebarShow || colorPick)}
         />
@@ -187,7 +185,7 @@ class Wrapper extends Component {
           sidebarShow={sidebarShow}
           weather={weather}
           showSeconds={showSeconds}
-          handleTimeClick={() => this.handleOutsideColorClick()}
+          handleTimeClick={() => this.handleSidebarExit()}
         />
       </Background>
     );

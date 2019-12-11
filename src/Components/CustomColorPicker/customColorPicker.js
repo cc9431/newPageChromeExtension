@@ -124,10 +124,7 @@ class CustomColorPicker extends React.Component {
             color={selectedColorPicker}
           />
         </div>
-        <div
-          onClick={() => this.props.handleColorClick()}
-          className="customPicker"
-        >
+        <div className="customPicker">
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
           <div>
             <div className="settingLabel">Current Color</div>

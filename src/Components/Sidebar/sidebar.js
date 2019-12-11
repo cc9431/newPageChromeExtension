@@ -4,7 +4,7 @@ import './sidebar.css';
 const Sidebar = (props) => {
   return (
     <div
-      onMouseLeave={() => props.exit()}
+      onClick={() => props.handleColorClick()}
       className={`sidebar${props.show ? ' hover' : ''}`}
     >
       {props.children}

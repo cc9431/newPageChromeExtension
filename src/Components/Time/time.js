@@ -50,7 +50,10 @@ class Time extends Component {
     return (
       <div
         style={style}
-        onClick={() => this.props.handleTimeClick()}
+        onClick={(e) => {
+          console.log('time');
+          return this.props.handleTimeClick(e)}
+        }
         className={this.state.show ? 'time show' : 'time'}
       >
         <div style={{ display: 'inline-flex' }}>
