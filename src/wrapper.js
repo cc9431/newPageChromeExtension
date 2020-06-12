@@ -39,11 +39,12 @@ class Wrapper extends Component {
   };
 
   handleSidebarExit = () => {
-    this.setState({ colorPick: false, menuHover: false, sidebarShow: false });
+    if (this.state.colorPick || this.state.menuHover || this.state.sidebarShow)
+      this.setState({ colorPick: false, menuHover: false, sidebarShow: false });
   };
 
   handleRightClick = () => {
-    this.setState({ colorPick: true });
+    if (!this.state.colorPick) this.setState({ colorPick: true });
   };
 
   handleColorChange = (selectedColor) => {
@@ -52,7 +53,7 @@ class Wrapper extends Component {
   };
 
   handleOutsideColorClick = () => {
-    this.setState({ colorPick: false });
+    if (this.state.colorPick) this.setState({ colorPick: false });
   };
 
   handleSecondsToggle = () => {
@@ -64,7 +65,8 @@ class Wrapper extends Component {
   };
 
   getWeather = (pos) => {
-    const { zip } = this.state.weather;
+    const { weather } = this.state;
+    const { zip } = weather;
     if (!zip) return;
     const headers = { 'Access-Control-Allow-Origin': '*' };
     const mainUrl = 'https://api.openweathermap.org/data/2.5/weather?';
@@ -73,27 +75,17 @@ class Wrapper extends Component {
     axios
       .get(`${mainUrl}zip=${zip},us&units=${units}&appid=${appid}`, headers)
       .then(({ data }) => {
-        const { weather, main, sys } = data;
-        const description = weather.length ? weather[0].description : '';
+        const { main, sys } = data;
+        const description = data.weather.length ? data.weather[0].description : '';
         const sunrise = sys.sunrise ? moment.unix(sys.sunrise) : moment();
         const sunset = sys.sunset ? moment.unix(sys.sunset) : moment();
-        console.log('description', description);
-        console.log(
-          `current: ${main.temp}, high: ${main.temp_max}, low: ${main.temp_min}`
-        );
-        console.log(
-          `sunrise: ${sunrise.format('h:mm a')}, sunset: ${sunset.format(
-            'h:mm a'
-          )}`
-        );
-        this.setState({
-          weather: {
-            description,
-            temperature: main.temp,
-            sunrise,
-            sunset
-          }
-        });
+        weather.description = description;
+        weather.temperature = main.temp;
+        weather.sunrise = sunrise;
+        weather.sunset = sunset;
+        console.log(sys.sunrise);
+        console.log(sys.sunset);
+        this.setState({ weather });
       })
       .catch();
   };
@@ -144,7 +136,7 @@ class Wrapper extends Component {
         handleBackgroundClick={() => this.handleSidebarExit()}
         selectedColor={selectedColor}
       >
-        <Sidebar 
+        <Sidebar
           handleColorClick={() => this.handleOutsideColorClick()}
           show={sidebarShow}
         >
@@ -167,7 +159,7 @@ class Wrapper extends Component {
               <input
                 className="zipCode"
                 type="text"
-                value={weather.zip}
+                value={weather.zip || ""}
                 onChange={(e) => this.updateZip(e)}
               />
               <button className="zipCodeSave" onClick={() => this.saveZip()}>
@@ -187,6 +179,8 @@ class Wrapper extends Component {
           showSeconds={showSeconds}
           handleTimeClick={() => this.handleSidebarExit()}
         />
+        <p>
+        </p>
       </Background>
     );
   }
