@@ -13,7 +13,7 @@ const ColorCircle = (props) => (
       filter: props.isDragging ? 'opacity(25%)' : '',
       backgroundColor: props.color,
       border: `2px solid ${props.selected ? '#555555' : 'transparent'}`,
-      transform: props.pick ? 'translate(0, -3px)' : ''
+      transform: props.pick ? 'translate(0, -3px)' : '',
     }}
     className="circle"
   />

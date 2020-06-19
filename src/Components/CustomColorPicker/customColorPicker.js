@@ -7,11 +7,12 @@ class CustomColorPicker extends React.Component {
   constructor() {
     super();
     this.state = {
+      messageOpacity: 0,
       colors: [],
       selectedColorPicker: '',
       draggingColorIndex: -1,
       x: 0,
-      y: 0
+      y: 0,
     };
   }
 
@@ -44,11 +45,7 @@ class CustomColorPicker extends React.Component {
     this.setState({ colors: uniqueColors });
   };
 
-  generateRandomColor = () =>
-    '#' +
-    Math.random()
-      .toString(16)
-      .slice(-6);
+  generateRandomColor = () => '#' + Math.random().toString(16).slice(-6);
 
   handleColorPick = (hex) => {
     const { colors, selectedColorPicker } = this.state;
@@ -72,6 +69,11 @@ class CustomColorPicker extends React.Component {
       this.setState({ x, y, selectedColorPicker });
       this.props.handleRightClick();
     }
+  };
+
+  message = () => {
+    this.setState({ messageOpacity: 1 });
+    setTimeout(() => this.setState({ messageOpacity: 0 }), 1000);
   };
 
   renderColor = (color, index) => (
@@ -108,6 +110,9 @@ class CustomColorPicker extends React.Component {
     const colorPick = this.props.colorPick && selectedColorPicker !== '';
     return (
       <div>
+        <div style={{ opacity: this.state.messageOpacity }} className="message">
+          Color Copied to Clipboard!
+        </div>
         <div
           style={{
             transition: 'all 250ms ease',
@@ -116,7 +121,7 @@ class CustomColorPicker extends React.Component {
             top: `${y + 12}px`,
             left: `${x - 20}px`,
             visibility: colorPick ? 'visible' : 'hidden',
-            zIndex: 4
+            zIndex: 4,
           }}
         >
           <Twitter
@@ -128,7 +133,16 @@ class CustomColorPicker extends React.Component {
           <div className={'swatch'}>{this.renderColors(colorShow)}</div>
           <div>
             <div className="settingLabel">Current Color</div>
-            <div className={'selectedColor'}>{this.props.selectedColor}</div>
+            <div
+              onClick={() =>
+                navigator.clipboard
+                  .writeText(this.props.selectedColor)
+                  .then(() => this.message())
+              }
+              className="selectedColor"
+            >
+              {this.props.selectedColor}
+            </div>
           </div>
         </div>
       </div>
