@@ -1,153 +1,190 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ColorCircle from './colorCircle';
 import Twitter from 'react-color/lib/Twitter';
-import './customColorPicker.css';
+import styled from 'styled-components';
 
-class CustomColorPicker extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      messageOpacity: 0,
-      colors: [],
-      selectedColorPicker: '',
-      draggingColorIndex: -1,
-      x: 0,
-      y: 0,
-    };
+const CustomPicker = styled.div`
+  display: grid;
+  grid-gap: 20px;
+`;
+
+const Message = styled.div`
+  position: absolute;
+  left: 40vw;
+  opacity: ${(props) => props.messageOpacity};
+  font-size: 18px;
+  text-align: center;
+  width: 20vw;
+  text-shadow: 1px 1px black;
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: white;
+`;
+
+const Swatch = styled.div`
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+`;
+
+const ReactColor = styled.div`
+  will-change: top, left;
+  opacity: ${(props) => (props.colorPick ? 1 : 0)};
+  top: ${(props) => props.y + 12}px;
+  left: ${(props) => props.x - 28}px;
+  visibility: ${(props) => (props.colorPick ? 'visible' : 'hidden')};
+  position: absolute;
+  z-index: 4;
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+`;
+
+const Label = styled.div`
+  margin-bottom: 2px;
+  justify-self: left;
+  width: max-content;
+  color: whitesmoke;
+  text-align: left;
+  font-size: 13px;
+  text-shadow: 1px 1px black;
+`;
+
+const SelectedColor = styled.div`
+  text-align: left;
+  font-size: 18px;
+  text-shadow: 1px 1px black;
+  width: max-content;
+  color: white;
+  cursor: pointer;
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  :hover {
+    padding-left: 10px;
   }
+`;
 
-  componentWillMount() {
-    const { nColors } = this.props;
-    const localColors = localStorage.getItem('colors') || '[]';
-    const colors = JSON.parse(localColors);
-    this.uniqueColors(colors, nColors);
-  }
+const CustomColorPicker = (props) => {
+  const [messageOpacity, setMessageOpacity] = useState(0);
+  const [colors, setColors] = useState([]);
+  const [selectedColorPicker, setSelectedColor] = useState('');
+  const [draggingColorIndex, setDraggingColorIndex] = useState(-1);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
-  componentWillReceiveProps(nextProps) {
-    const { nColors } = nextProps;
-    const { colors } = this.state;
-    this.uniqueColors(colors, nColors);
-  }
+  const onlyUnique = (value, index, self) => self.indexOf(value) === index;
 
-  onlyUnique = (value, index, self) => self.indexOf(value) === index;
-
-  uniqueColors = (colors, nColors) => {
-    const uniqueColors = colors.filter(this.onlyUnique);
+  const uniqueColors = (newColors, nColors) => {
+    const uniqueColors = newColors.filter(onlyUnique);
     if (uniqueColors.length !== nColors) {
       while (uniqueColors.length < nColors) {
-        uniqueColors.push(this.generateRandomColor());
+        uniqueColors.push(generateRandomColor());
       }
       while (uniqueColors.length > nColors) {
         uniqueColors.pop();
       }
     }
     localStorage.setItem('colors', JSON.stringify(uniqueColors));
-    this.setState({ colors: uniqueColors });
+    setColors(uniqueColors);
   };
 
-  generateRandomColor = () => '#' + Math.random().toString(16).slice(-6);
+  const generateRandomColor = () => '#' + Math.random().toString(16).slice(-6);
 
-  handleColorPick = (hex) => {
-    const { colors, selectedColorPicker } = this.state;
+  const handleColorPick = (hex) => {
     colors[colors.indexOf(selectedColorPicker)] = hex;
-    this.setState({ colors, selectedColorPicker: hex });
+    setColors(colors);
+    setSelectedColor(hex);
     localStorage.setItem('colors', JSON.stringify(colors));
-    this.props.handleColorChange(hex);
+    props.handleColorChange(hex);
   };
 
-  handleColorChange = (hex) => {
-    this.props.handleColorChange(hex);
-  };
-
-  handleRightClick = (x, y, selectedColorPicker) => {
-    if (
-      this.props.colorPick &&
-      selectedColorPicker === this.state.selectedColorPicker
-    ) {
-      this.handleColorPick(this.generateRandomColor());
+  const handleRightClick = (x, y, clickedColor) => {
+    if (props.colorPick && clickedColor === selectedColorPicker) {
+      handleColorPick(generateRandomColor());
     } else {
-      this.setState({ x, y, selectedColorPicker });
-      this.props.handleRightClick();
+      setX(x);
+      setY(y);
+      setSelectedColor(clickedColor);
+      props.handleRightClick();
     }
   };
 
-  message = () => {
-    this.setState({ messageOpacity: 1 });
-    setTimeout(() => this.setState({ messageOpacity: 0 }), 1000);
+  const message = () => {
+    setMessageOpacity(1);
+    setTimeout(() => setMessageOpacity(0), 2000);
   };
 
-  renderColor = (color, index) => (
+  useEffect(() => {
+    console.log('component mounted!');
+    const { nColors } = props;
+    const localColors = localStorage.getItem('colors') || '[]';
+    const newColors = JSON.parse(localColors);
+    uniqueColors(newColors, nColors);
+  }, []);
+
+  useEffect(() => {
+    const { nColors } = props;
+    uniqueColors(colors, nColors);
+  }, [props.nColors]);
+
+  const renderColor = (color, index) => (
     <ColorCircle
       key={color}
       color={color}
       index={index}
-      isDragging={this.state.draggingColorIndex === index}
-      selected={this.props.selectedColor === color}
-      pick={this.state.selectedColorPicker === color && this.props.colorPick}
+      isDragging={draggingColorIndex === index}
+      selected={props.selectedColor === color}
+      pick={selectedColorPicker === color && props.colorPick}
       handleDragColorStart={() => {
-        this.props.handleColorClick();
-        this.setState({ draggingColorIndex: index });
+        props.handleColorClick();
+        setDraggingColorIndex(index);
       }}
-      handleDragColorEnd={() => this.setState({ draggingColorIndex: -1 })}
+      handleDragColorEnd={() => setDraggingColorIndex(-1)}
       handleSwitchColors={() => {
-        const { colors, draggingColorIndex } = this.state;
-        const draggingColor = colors[draggingColorIndex];
-        colors[index] = draggingColor;
-        colors[draggingColorIndex] = color;
-        this.setState({ colors, draggingColorIndex: index });
+        const newColors = { ...colors };
+        const draggingColor = newColors[draggingColorIndex];
+        newColors[index] = draggingColor;
+        newColors[draggingColorIndex] = color;
+        setColors(newColors);
+        setDraggingColorIndex(index);
       }}
-      handleColorChange={(color) => this.handleColorChange(color)}
-      handleRightClick={(x, y, color) => this.handleRightClick(x, y, color)}
+      handleColorChange={(color) => props.handleColorChange(color)}
+      handleRightClick={(x, y, color) => handleRightClick(x, y, color)}
     />
   );
 
-  renderColors = () =>
-    this.state.colors.map((color, index) => this.renderColor(color, index));
+  const renderColors = () =>
+    colors.map((color, index) => renderColor(color, index));
 
-  render() {
-    const { x, y, selectedColorPicker } = this.state;
-    const colorShow = this.props.sidebarShow || this.props.colorPick;
-    const colorPick = this.props.colorPick && selectedColorPicker !== '';
-    return (
-      <div>
-        <div style={{ opacity: this.state.messageOpacity }} className="message">
-          Color Copied to Clipboard!
+  const colorShow = props.sidebarShow || props.colorPick;
+  const colorPick = props.colorPick && selectedColorPicker !== '';
+  return (
+    <div>
+      <Message messageOpacity={messageOpacity}>
+        Color Copied to Clipboard!
+      </Message>
+      <ReactColor colorPick={colorPick} x={x} y={y}>
+        <Twitter
+          onChange={(color) => handleColorPick(color.hex)}
+          color={selectedColorPicker}
+        />
+      </ReactColor>
+      <CustomPicker>
+        <Swatch>{renderColors(colorShow)}</Swatch>
+        <div>
+          <Label>Current Color</Label>
+          <SelectedColor
+            onClick={() =>
+              navigator.clipboard
+                .writeText(props.selectedColor)
+                .then(() => message())
+            }
+          >
+            {props.selectedColor}
+          </SelectedColor>
         </div>
-        <div
-          style={{
-            transition: 'all 250ms ease',
-            opacity: colorPick ? 1 : 0,
-            position: 'absolute',
-            top: `${y + 12}px`,
-            left: `${x - 20}px`,
-            visibility: colorPick ? 'visible' : 'hidden',
-            zIndex: 4,
-          }}
-        >
-          <Twitter
-            onChange={(color) => this.handleColorPick(color.hex)}
-            color={selectedColorPicker}
-          />
-        </div>
-        <div className="customPicker">
-          <div className={'swatch'}>{this.renderColors(colorShow)}</div>
-          <div>
-            <div className="settingLabel">Current Color</div>
-            <div
-              onClick={() =>
-                navigator.clipboard
-                  .writeText(this.props.selectedColor)
-                  .then(() => this.message())
-              }
-              className="selectedColor"
-            >
-              {this.props.selectedColor}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+      </CustomPicker>
+    </div>
+  );
+};
 
 export default CustomColorPicker;

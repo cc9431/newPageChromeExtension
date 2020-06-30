@@ -6,7 +6,6 @@
   color: whitesmoke;
   text-align: left;
   font-size: 18px;
-  font-family: 'SourceCodePro-ExtraLight';
   text-shadow: 1px 1px black;
   outline: none;
   border: 1px solid transparent;
@@ -30,7 +29,6 @@
   border: 1px solid whitesmoke;
   text-align: left;
   font-size: 20px;
-  font-family: 'SourceCodePro-ExtraLight';
   text-shadow: 1px 1px black;
   outline: none;
   border-radius: 5px;
@@ -50,7 +48,6 @@
 .settingLabel {
   margin-bottom: 2px;
   justify-self: left;
-  font-family: 'SourceCodePro-ExtraLight';
   width: max-content;
   color: whitesmoke;
   text-align: left;

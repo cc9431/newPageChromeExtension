@@ -12,7 +12,7 @@ const Wrapper = styled.img`
   transition: all 0.4s ease;
   opacity: ${(props) => (props.show ? 0.4 : 0)};
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  pointer-events: ${(props) => (props.show ? 'auto' : 'none')}
+  pointer-events: ${(props) => (props.show ? 'auto' : 'none')};
   :hover {
     opacity: 0.8;
   }
@@ -21,13 +21,15 @@ const Wrapper = styled.img`
   }
 `;
 
-const MenuButton = (props) =>
+const MenuButton = (props) => (
   <Wrapper
+    show={props.show}
     onClick={() => props.hideOrShow()}
     draggable="false"
     src={`${process.env.PUBLIC_URL}/bars.svg`}
     className={props.show ? 'menuButton' : 'menuButton menuButtonHover'}
     alt="menu"
   />
+);
 
 export default MenuButton;

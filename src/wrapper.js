@@ -7,6 +7,7 @@ import TimeSetting from './Components/Time/timeSetting';
 import Background from './Components/Background/background';
 import Sidebar from './Components/Sidebar/sidebar';
 import CustomColorPicker from './Components/CustomColorPicker/customColorPicker';
+import GlobalStyle from './globalStyle';
 import './wrapper.css';
 
 class Wrapper extends Component {
@@ -24,8 +25,8 @@ class Wrapper extends Component {
         temperature: '0',
         description: '',
         sunrise: moment(),
-        sunset: moment()
-      }
+        sunset: moment(),
+      },
     };
   }
 
@@ -76,7 +77,9 @@ class Wrapper extends Component {
       .get(`${mainUrl}zip=${zip},us&units=${units}&appid=${appid}`, headers)
       .then(({ data }) => {
         const { main, sys } = data;
-        const description = data.weather.length ? data.weather[0].description : '';
+        const description = data.weather.length
+          ? data.weather[0].description
+          : '';
         const sunrise = sys.sunrise ? moment.unix(sys.sunrise) : moment();
         const sunset = sys.sunset ? moment.unix(sys.sunset) : moment();
         weather.description = description;
@@ -129,7 +132,7 @@ class Wrapper extends Component {
       selectedColor,
       nColors,
       weather,
-      showSeconds
+      showSeconds,
     } = this.state;
     return (
       <Background
@@ -159,7 +162,7 @@ class Wrapper extends Component {
               <input
                 className="zipCode"
                 type="text"
-                value={weather.zip || ""}
+                value={weather.zip || ''}
                 onChange={(e) => this.updateZip(e)}
               />
               <button className="zipCodeSave" onClick={() => this.saveZip()}>
@@ -179,8 +182,7 @@ class Wrapper extends Component {
           showSeconds={showSeconds}
           handleTimeClick={() => this.handleSidebarExit()}
         />
-        <p>
-        </p>
+        <GlobalStyle />
       </Background>
     );
   }

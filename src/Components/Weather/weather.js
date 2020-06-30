@@ -1,5 +1,15 @@
 import React from 'react';
-import './weather.css';
+import styled from 'styled-components';
+
+const Description = styled.p`
+  margin-top: 150px;
+  font-size: calc(10px + 2vw) !important;
+`;
+
+const SunTimes = styled.p`
+  margin-top: 150px;
+  font-size: calc(9px + 1vw) !important;
+`;
 
 const Weather = (props) => {
   const { weather } = props;
@@ -7,10 +17,10 @@ const Weather = (props) => {
   const text = description ? `${description}, ${temperature}˚` : '';
   return (
     <div>
-      <p style={{ marginTop: 150, fontSize: 'calc(10px + 2vw)' }}>{text}</p>
-      <p style={{ marginTop: 150, fontSize: 'calc(9px + 1vw)' }}>
+      <Description>{text}</Description>
+      <SunTimes>
         {sunrise.format('hh MM ss a')} => {sunset.format('hh MM ss a')}
-      </p>
+      </SunTimes>
     </div>
   );
 };

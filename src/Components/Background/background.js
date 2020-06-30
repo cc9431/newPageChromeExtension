@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled`
+const Wrapper = styled.div`
   user-select: none;
   text-align: center;
   align-items: center;
@@ -12,14 +12,13 @@ const Wrapper = styled`
 `;
 
 const Background = (props) => (
-  <div className="background">
-    <div
-      onClick={() => props.handleBackgroundClick()}
-      style={{ backgroundColor: props.selectedColor }}
-      className="background"
-    />
+  <Wrapper
+    onClick={() => props.handleBackgroundClick()}
+    style={{ backgroundColor: props.selectedColor }}
+    className="background"
+  >
     {props.children}
-  </div>
+  </Wrapper>
 );
 
 export default Background;
